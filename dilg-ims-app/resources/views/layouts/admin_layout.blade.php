@@ -35,10 +35,38 @@
     }
 
     .sidebar-logo {
-      width: 120px; /* Adjust the width as needed */
-      height: 140px;
-      max-height: 100px; /* Ensure it doesn't get too large */
+      width: 80px; /* Adjust the width as needed */
+      height: auto;
+      display: block;
+      margin: 10px auto; /* Ensure it doesn't get too large */
     }
+
+    .sidebar-category {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    padding: 20px 0;
+    }
+
+    .region-text {
+    font-weight: bold;
+    font-size: 50px; !important /* 150px is too large; reduce as needed */
+    color: white; /* Make sure the background isn't white */
+    margin: 0;
+    display: block; /* Ensure it follows block-level styling */
+    text-align: center;
+    width: 100%;
+    }
+
+    .menu-divider {
+    border: none;
+    height: 2px;
+    background-color: white; /* Adjust color if needed */
+    margin: 0 auto; /* Centers the line */
+    width: 80%; /* Adjust width */
+    }
+    
   </style>
 
   <div class="container-scroller d-flex">
@@ -69,18 +97,19 @@
           <span></span>
         </li> -->
 
-        <!-- Logo -->
-        <li class="nav-item">
-          <a class="nav-link" href="index.html">
-            <img src="assets\img\dilg_logo.png" alt="Logo" class="sidebar-logo">
-          </a>
-        </li>
+              <!-- Logo -->
+              <li class="nav-item" style="text-align: center; margin-bottom: -10px;">
+                  <a class="nav-link" href="index.html">
+                      <img src="{{ asset('assets/img/dilg_logo.png') }}" alt="DILG Logo" class="sidebar-logo" style="width: 150px; height: auto; margin-bottom: -10px;">
+                  </a>
+              </li>
 
-        <!-- REGION VI -->
-        <li class="nav-item sidebar-category">
-          <p>REGION VI</p>
-          <span></span>
-        </li>
+              <!-- REGION VI -->
+              <li class="nav-item sidebar-category" style="text-align: center; margin-top: 5px;">
+                  <p class="region-text" style="font-size: 30px; color: white; font-weight: bold; margin-top: 0;">REGION VI</p>
+              </li>
+
+              <hr class="menu-divider"> <!-- Divider Line -->
 
         <!-- dashboard -->
         <li class="nav-item">
