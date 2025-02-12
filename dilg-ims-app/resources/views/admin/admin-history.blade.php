@@ -9,40 +9,30 @@
             <div class="container">
                 <h3 class="mb-4">History</h3>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-white" style="background-color: #002f6c;">
+                    <table class="table table-bordered text-white" style="background-color: #002C76;">
                         <thead>
-                        <table class="table table-bordered text-white" style="background-color: #002f6c;">
-    <thead>
-    <table class="table table-bordered text-white" style="background-color: #002f6c;">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Reference</th>
-            <th>Semi-expendable Property Name</th>
-            <th>Semi-expendable Property No.</th>
-            <th>Item Description</th>
-            <th>Reason</th>
-            <th>Others</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-    </tbody>
-</table>
-
-    </tbody>
-</table>
-      
+                            <tr>
+                                <th>Date</th>
+                                <th>Reference</th>
+                                <th>Semi-expendable Property Name</th>
+                                <th>Semi-expendable Property No.</th>
+                                <th>Item Description</th>
+                                <th>Reason</th>
+                                <th>Others</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color: black; background-color:rgb(196, 196, 196);">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                         </tbody>
                     </table>
                 </div>
