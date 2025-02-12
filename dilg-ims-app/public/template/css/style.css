@@ -21888,7 +21888,7 @@ dl li {
   -ms-transition: background 0.25s ease;
   background: url(../images/other/navbar-cover.jpg) center center no-repeat;
   background-size: cover;
-  height: 262px;
+  height: 100px;
   width: auto;
 }
 

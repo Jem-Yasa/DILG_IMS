@@ -1,5 +1,10 @@
 @extends('layouts.admin_layout')
 
-@section('content')
-    <p>DASHBOARD NI</p>
+@section('title', 'Dashboard')
+
+@section('contents')
+<section class="section">
+    <p>Dashboard ni</p>
+</section>
+    
 @endsection
