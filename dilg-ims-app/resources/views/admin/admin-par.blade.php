@@ -7,12 +7,18 @@
         <div class="card">
             <div class ="card-body"> 
                 <div class="container">
-                    <h3 class="mb-4">Property Acknowledgment Receipt</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h3 class="mb-4">Property Acknowledgment Receipt</h3>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <label for="search">Search:</label>
+                    <input type="text" id="search" style="width: 200px; height: 30px; border: 1px solid #ccc; border-radius: 5px; padding: 5px 10px; font-size: 14px;">
+                </div>
+            </div>
                     <div class="table-responsive">
                         <table class="table table-bordered text-white" style="background-color: #002f6c;">
                             <thead>
                                 <tr>
-                                    <th>Quality</th>
+                                    <th>Quantity</th>
                                     <th>Unit</th>
                                     <th>Unit Cost</th>
                                     <th>Total Cost</th>

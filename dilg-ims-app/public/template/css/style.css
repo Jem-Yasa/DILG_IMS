@@ -22296,4 +22296,14 @@ dl li {
   }
 }
 
+.profile-img {
+  width: 50px; /* Adjust size */
+  height: 50px; /* Ensure it's a perfect circle */
+  border-radius: 50%; /* Makes it circular */
+  object-fit: cover; /* Ensures it covers the entire circle */
+  border: 2px solid white; /* Optional: Add a border */
+}
+
 /*# sourceMappingURL=maps/style.css.map */
+ 
+

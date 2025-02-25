@@ -121,7 +121,7 @@
 
         <!-- issued -->
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-property_issued') }}">
+          <a class="nav-link" href="{{ route('admin-issued_table') }}">
             <i class="mdi mdi-receipt-text menu-icon"></i>
             <span class="menu-title">Property Issued <br>Table</span>
           </a>
@@ -129,11 +129,19 @@
   
         <!-- Property Card -->
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-property_card') }}">
+          <a class="nav-link" href="{{ route('admin-registry') }}">
           <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">Registry of <br>Semi-Expendable <br>Property Card</span>
+            <span class="menu-title">Registry of <br>Semi-Expendable <br>Property Issued</span>
           </a>
         </li>
+        
+        <!-- semi-Card -->
+        <li class="nav-item">
+                  <a class="nav-link" href="{{ route('admin-semi_card') }}">
+                  <i class="mdi mdi-receipt-text menu-icon"></i>
+                    <span class="menu-title">Semi-Expendable <br>Property-Card</span>
+                  </a>
+                </li>
 
         <!-- Ledger Card -->
         <li class="nav-item">
@@ -196,6 +204,23 @@
             <li class="nav-item">
               <h4 class="mb-0 font-weight-bold d-none d-xl-block">Feb 12, 2025</h4>
             </li>
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                  <img src="{{ asset('template/images/faces/face5.jpg') }}" alt="profile" class="profile-img"/>
+                  <span class="nav-profile-name">Administrator</span>
+              </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item">
+                    <i class="mdi mdi-settings text-primary"></i>
+                    Settings
+                </a>
+                <a class="dropdown-item">
+                    <i class="mdi mdi-logout text-primary"></i>
+                    Logout
+                </a>
+            </div>
+          </li>
+
             <!-- <li class="nav-item dropdown me-1">
               <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-bs-toggle="dropdown">
                 <i class="mdi mdi-calendar mx-0"></i>
