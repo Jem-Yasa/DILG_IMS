@@ -21,6 +21,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('template/css/style.css') }}" rel="stylesheet">
+    
 
     <!-- Favicons -->
     <link href="{{ asset('template/images/favicon.png') }}" rel="shortcut icon" />

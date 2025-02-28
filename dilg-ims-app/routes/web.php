@@ -31,6 +31,7 @@ Route::view('profile', 'profile')
         Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
         Route::post('/property/store', [PropertyController::class, 'store'])->name('property.store');
         Route::post('/property/edit', [PropertyController::class, 'edit'])->name('property.edit');
+        Route::get('/property/edit/{id}', [PropertyController::class, 'edit'])->name('property.edit');
         Route::post('/property/destroy', [PropertyController::class, 'destroy'])->name('property.destroy');
     });
 

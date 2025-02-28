@@ -39,12 +39,18 @@ class PropertyController extends Controller
     /**
      * Show a list of all property entries.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $properties = Property::latest()->paginate(5); // Fetch all properties
+    //     return view('admin.admin-issued_table', compact('properties'));
+    // }
+
+    public function index(Request $request)
     {
-        $properties = Property::latest()->paginate(10); // Fetch all properties
+        $perPage = $request->input('per_page', 10); // Default to 10 records per page
+        $properties = Property::paginate($perPage);
         return view('admin.admin-issued_table', compact('properties'));
     }
-
 
     /**
      * Show a specific property entry.
@@ -57,9 +63,10 @@ class PropertyController extends Controller
     /**
      * Show the form for editing a property entry.
      */
-    public function edit(Property $property)
+    public function edit($id)
     {
-        return view('properties.edit', compact('property'));
+        $property = Property::findOrFail($id);
+        return view('property.edit', compact('property'));
     }
 
     /**
