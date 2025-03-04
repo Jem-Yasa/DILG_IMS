@@ -23,7 +23,24 @@
                                 </svg>
                                 Filter
                             </a>
-                            
+                            <!-- Property Type Filter -->
+                            <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 200px; ">
+                                    
+                                    <!-- Dropdown with Non-Selectable Label -->
+                                    <select id="propertyDropdown" onchange="filterTable()" class="form-select" style="width: 100%; padding: 5px;">
+                                        <option disabled selected>Select Property Type</option> <!-- Non-Selectable Label -->
+                                        <option value="ICT Equipment">ICT Equipment</option>
+                                        <option value="Office Equipment">Office Equipment</option>
+                                        <option value="Furniture & Fixture">Furniture & Fixture</option>
+                                        <option value="Communication">Communication</option>
+                                        <option value="Books">Books</option>
+                                        <option value="Other Machinery & Equipment">Other Machinery & Equipment</option>
+                                        <option value="Disaster Response & Rescue">Disaster Response & Rescue</option>
+                                        <option value="Building">Building</option>
+                                        <option value="Motor Vehicle">Motor Vehicle</option>
+                                        <option value="Computer Software">Computer Software</option>
+                                    </select>
+                            </div>                            
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -78,4 +95,24 @@
         </div>
     </section>
     
+    <script>
+    document.getElementById("filterButton").addEventListener("click", function() {
+            var dropdown = document.getElementById("filterDropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        });
+
+        // Filter function for search input
+        function filterDropdown() {
+            var input, filter, ul, li, i, txtValue;
+            input = document.getElementById("filterInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("propertyList");
+            li = ul.getElementsByTagName("li");
+
+            for (i = 0; i < li.length; i++) {
+                txtValue = li[i].textContent || li[i].innerText;
+                li[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+            }
+    }
+    </script>
 @endsection

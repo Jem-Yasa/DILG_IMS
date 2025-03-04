@@ -6,50 +6,74 @@
     <section class="section">
         <div class="card">
             <div class="card-body"> 
-                <div class="container">
-                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                        <h3 class="mb-4">Property Issued Table</h3>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <label for="search">Search:</label>
-                            <input type="text" id="search" style="width: 200px; height: 36px; border: 1px solid #ccc; border-radius: 5px; padding: 5px 10px; font-size: 14px;">
-                            
-                            <!-- Create Button -->
-                            <a href="{{ route('admin-create') }}" 
-                                class="btn" 
-                                style="width: 130px; height: 36px; display: flex; align-items: center; justify-content: center; 
-                                    font-weight: bold; border-radius: 5px; background-color: #FFDE15; color: black; border: none;">
-                                + Create
-                            </a>
-
-                            <!-- Filter Button -->
-                            <a 
-                                class="btn" 
-                                style="width: 130px; height: 36px; display: flex; align-items: center; justify-content: center; 
-                                    font-weight: bold; border-radius: 5px; background-color: rgb(30, 194, 38); color: white; border: none; gap: 8px; text-decoration: none;">
-                                <svg width="20" height="20" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2.5a1 1 0 01-.293.707L11 12.914V17a1 1 0 01-.447.894l-2 1A1 1 0 017 18v-5.086L3.293 7.207A1 1 0 013 6.5V4z" clip-rule="evenodd"/>
-                                </svg>
-                                Filter
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Number Paging -->
-                    <div style="display: flex; align-items: center; margin-top: 15px;">
-                        <label for="recordsPerPage">Show</label>
-                        <select id="recordsPerPage" class="form-control form-control-sm"
-                            style="width: auto; display: inline-block; margin: 0 5px;" 
-                            onchange="updateRecordsPerPage()">
+                <h3 class="mb-4">Property Issued Table</h3>
+                <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  
+                    <!-- Left: Show Records Dropdown -->
+                    <div class="d-flex align-items-center">
+                        <label for="recordsPerPage" class="me-2">Show</label>
+                        <select id="recordsPerPage" class="form-select form-select-sm me-2" style="width: 70px; margin: 0 5px;" onchange="updateRecordsPerPage()">
                             <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
                             <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
                             <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
                             <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
                         </select>
-                        <label for="recordsPerPage">records</label>
+                        <span>records</span>
                     </div>
 
+                    <!-- Right: Search, Create, and Filter Buttons -->
+                    <div class="d-flex align-items-center">
+                     <label for="search">Search:</label>
+                        <input type="text" id="search" 
+                            style="width: 200px; height: 30px; border: 1px solid #ccc; border-radius: 5px; padding: 5px 10px; font-size: 14px;">
+
+                                <!-- Create Button -->
+                                <a href="{{ route('admin-create') }}" class="btn btn-warning btn-sm me-2 d-flex align-items-center" 
+                                    style="width: 130px; height: 40px; display: flex; align-items: center; justify-content: center; 
+                                    background-color: #ffc107; font-weight: bold; border-radius: 8px; gap: 8px; text-decoration: none; border: none;
+                                    margin-left: 10px;">  <!-- Added margin-left for spacing -->
+                                    <svg width="20" height="20" fill="black" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10 4a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V5a1 1 0 011-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Create
+                                </a>
+
+                                <!-- Filter Button -->
+                                    <button id="filterButton" class="btn d-flex align-items-center" 
+                                        style="width: 130px; height: 40px; display: flex; align-items: center; justify-content: center; 
+                                        font-weight: bold; border-radius: 5px; background-color: rgb(30, 194, 38); color: white; border: none; 
+                                        gap: 8px; text-decoration: none;"
+                                        onclick="toggleFilterDropdown()">
+                                        <svg width="20" height="20" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2.5a1 1 0 01-.293.707L11 12.914V17a1 1 0 01-.447.894l-2 1A1 1 0 017 18v-5.086L3.293 7.207A1 1 0 013 6.5V4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Filter
+                                    </button>
+
+                                    <!-- Property Type Filter -->
+                                    <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 200px; ">
+                                    
+                                        <!-- Dropdown with Non-Selectable Label -->
+                                        <select id="propertyDropdown" class="form-select" style="width: 100%; padding: 5px;">
+                                            <option value="select property type"disabled selected>Select Property Type</option> <!-- Non-Selectable Label -->
+                                            <option value="ICT Equipment">ICT Equipment</option>
+                                            <option value="Office Equipment">Office Equipment</option>
+                                            <option value="Furniture & Fixture">Furniture & Fixture</option>
+                                            <option value="Communication">Communication</option>
+                                            <option value="Books">Books</option>
+                                            <option value="Other Machinery & Equipment">Other Machinery & Equipment</option>
+                                            <option value="Disaster Response & Rescue">Disaster Response & Rescue</option>
+                                            <option value="Building">Building</option>
+                                            <option value="Motor Vehicle">Motor Vehicle</option>
+                                            <option value="Computer Software">Computer Software</option>
+                                        </select>
+                                    </div>
+
+                    </div>
+                </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered text-white" style="background-color: #002C76; text-align: center;">
+                    <table class="table table-bordered text-white" style="background-color: #002C76; text-align: center;">
                             <thead>
                                 <tr>
                                     <th rowspan="2">Date</th>
@@ -208,4 +232,30 @@
         }
     </script>
 
+    <!-- filter -->
+    <script>
+        function toggleFilterDropdown() {
+            var dropdown = document.getElementById("filterDropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        }
+
+        function filterTable() {
+            var selectedProperty = document.getElementById("propertyDropdown").value.toLowerCase();
+            var tableRows = document.querySelectorAll("#propertyTableBody tr");
+
+            tableRows.forEach((row) => {
+                var propertyTypeCell = row.cells[2];
+                if (propertyTypeCell) {
+                    var propertyType = propertyTypeCell.textContent.trim().toLowerCase();
+                    if (selectedProperty === "select property type" || propertyType === selectedProperty) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            });
+        }
+
+        document.getElementById("propertyDropdown").addEventListener("change", filterTable);
+    </script>
 @endsection
