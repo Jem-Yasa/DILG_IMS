@@ -51,90 +51,105 @@
                                         Filter
                                     </button>
 
-                                    <!-- Property Type Filter -->
-                                    <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 200px; ">
-                                    
-                                        <!-- Dropdown with Non-Selectable Label -->
-                                        <select id="propertyDropdown" class="form-select" style="width: 100%; padding: 5px;">
-                                            <option value="select property type"disabled selected>Select Property Type</option> <!-- Non-Selectable Label -->
-                                            <option value="ICT Equipment">ICT Equipment</option>
-                                            <option value="Office Equipment">Office Equipment</option>
-                                            <option value="Furniture & Fixture">Furniture & Fixture</option>
-                                            <option value="Communication">Communication</option>
-                                            <option value="Books">Books</option>
-                                            <option value="Other Machinery & Equipment">Other Machinery & Equipment</option>
-                                            <option value="Disaster Response & Rescue">Disaster Response & Rescue</option>
-                                            <option value="Building">Building</option>
-                                            <option value="Motor Vehicle">Motor Vehicle</option>
-                                            <option value="Computer Software">Computer Software</option>
-                                        </select>
-                                    </div>
+                                    <style>
+                                        .cancel-button {
+                                        background-color: #dc3545; /* Red */
+                                        color: white;
+                                    }
 
+                                    .cancel-button:hover {
+                                        background-color: #c82333; /* Darker Red on Hover */
+                                    }
+                                    </style>
+
+                                   <!-- Inventory Type Filter -->
+                                    <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
+                                        <select id="inventoryTypeDropdown" class="form-select" style="width: 100%; padding: 5px;">
+                                            <option value="" disabled selected>Select Article Inventory Type</option> <!-- Non-Selectable Label -->
+                                            <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option> <!-- Non-Selectable Label -->
+                                            <option value="ICT Equipment HV">ICT Equipment</option>
+                                            <option value="Office Equipment HV">Office Equipment</option>
+                                            <option value="Furniture & Fixture HV">Furniture & Fixture</option>
+                                            <option value="Communication HV">Communication</option>
+                                            <option value="Books HV">Books HV</option>
+                                            <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option> <!-- Non-Selectable Label -->
+                                            <option value="ICT Equipment LV">ICT Equipment</option>
+                                            <option value="Office Equipment LV">Office Equipment</option>
+                                            <option value="Furniture & Fixture LV">Furniture & Fixture</option>
+                                            <option value="Communication LV">Communication</option>
+                                            <option value="Books LV">Books LV</option>
+                                        </select>
+
+                                        <button style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
+                                            Cancel Filter
+                                        </button>
+                                    </div>
                     </div>
                 </div>
                     <div class="table-responsive">
                     <table class="table table-bordered text-white" style="background-color: #002C76; text-align: center;">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2">Date</th>
-                                    <th rowspan="2">ICS/IRSP No.</th>
-                                    <th rowspan="2">Property Type</th>
-                                    <th rowspan="2">Semi-expendable Property No.</th>
-                                    <th rowspan="2">Semi-expendable Property</th>
-                                    <th rowspan="2">Reference</th>
-                                    <th rowspan="2">Item Description</th>
-                                    <th rowspan="2">Estimated Useful life</th>
-                                    <th colspan="2" style="color: black; background-color:#e4e4e4;">Issued</th>
-                                    <th colspan="2" style="color: black; background-color:#e4e4e4;">Returned</th>
-                                    <th colspan="2" style="color: black; background-color:#e4e4e4;">Re-Issued</th>
-                                    <th rowspan="2">Disposal Qty</th>
-                                    <th rowspan="2">Balance Qty</th>
-                                    <th rowspan="2">Amount</th>
-                                    <th rowspan="2">Remarks</th>
-                                    <th rowspan="2">Action</th>
-                                </tr>
-                                <tr>
-                                    <th>Qty</th>
-                                    <th>Officer/Officers</th>
-                                    <th>Qty</th>
-                                    <th>Officer/Officers</th>
-                                    <th>Qty</th>
-                                    <th>Officer/Officer</th>
-                                </tr>
-                            </thead>
-                            <tbody id="propertyTableBody" style="color: black; background-color:rgb(196, 196, 196);">
-                            <!-- <tbody style="color: black; background-color:rgb(196, 196, 196);"> -->
-                                @if($properties->count() > 0)    
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Date</th>
+                                <th rowspan="2">Office</th>
+                                <th rowspan="2">ICS/RRSP No.</th>
+                                <th rowspan="2">Article Inventory Type</th>
+                                <th rowspan="2">Description</th>
+                                <th rowspan="2">Unit of Measure</th>
+                                <th rowspan="2">Unit Value</th>
+                                <th rowspan="2">Total Cost</th>
+                                <th rowspan="2">Inventory No.</th>
+                                <th rowspan="2">Estimated Useful Life</th>
+                                <th colspan="2" style="color: black; background-color:#e4e4e4;">Issued</th>
+                                <th colspan="2" style="color: black; background-color:#e4e4e4;">Returned</th>
+                                <th colspan="2" style="color: black; background-color:#e4e4e4;">Re-Issued</th>
+                                <th rowspan="2">Disposal Qty</th>
+                                <th rowspan="2">Balance Qty</th>
+                                <th rowspan="2">Remarks</th>
+                                <th rowspan="2">Action</th>
+                            </tr>
+                            <tr>
+                                <th>Qty</th>
+                                <th>Accountable Officer</th>
+                                <th>Qty</th>
+                                <th>Accountable Officer</th>
+                                <th>Qty</th>
+                                <th>Accountable Officer</th>
+                            </tr>
+                        </thead>
+                        <tbody id="propertyTableBody" style="color: black; background-color: rgb(196, 196, 196);">
+                            @if($properties->count() > 0)    
                                 @foreach($properties as $property)
                                     <tr>
                                         <td>{{ $property->date_acquired }}</td>
+                                        <td>{{ $property->office }}</td>
                                         <td>{{ $property->ics_rrsp_no }}</td>
-                                        <td>{{ $property->property_type }}</td>
-                                        <td>{{ $property->semi_expendable_no }}</td>
-                                        <td>{{ $property->semi_expendable_name }}</td>
-                                        <td>{{ $property->reference }}</td>
-                                        <td>{{ $property->item_description }}</td>
+                                        <td>{{ $property->article_inventory_type }}</td>
+                                        <td>{{ $property->description }}</td>
+                                        <td>{{ $property->unit_measure }}</td>
+                                        <td>{{ $property->unit_value }}</td>
+                                        <td>{{ $property->total_cost }}</td>
+                                        <td>{{ $property->inventory_item_no }}</td>
                                         <td>{{ $property->estimated_useful_life }}</td>
 
                                         <!-- Issued Column -->
                                         <td>{{ $property->status == 'Issued' ? $property->quantity : '' }}</td>
-                                        <td>{{ $property->status == 'Issued' ? $property->office_officer : '' }}</td>
+                                        <td>{{ $property->status == 'Issued' ? $property->accountable_officer : '' }}</td>
 
                                         <!-- Returned Column -->
                                         <td>{{ $property->status == 'Returned' ? $property->quantity : '' }}</td>
-                                        <td>{{ $property->status == 'Returned' ? $property->office_officer : '' }}</td>
+                                        <td>{{ $property->status == 'Returned' ? $property->accountable_officer : '' }}</td>
 
                                         <!-- Re-Issued Column -->
                                         <td>{{ $property->status == 'Re-Issued' ? $property->quantity : '' }}</td>
-                                        <td>{{ $property->status == 'Re-Issued' ? $property->office_officer : '' }}</td>
-                                       
+                                        <td>{{ $property->status == 'Re-Issued' ? $property->accountable_officer : '' }}</td>
+                                        
                                         <td></td> <!-- Disposal Qty -->
-                                        <td></td> <!--Balance Qty -->
-                                        <td>{{ $property->amount }}</td>
+                                        <td></td> <!-- Balance Qty -->
                                         <td>{{ $property->remarks }}</td>
                                         <td>
                                             <a href="{{ route('property.edit', $property->id) }}" class="btn btn-primary btn-sm" 
-                                               style="width: 80px; height: 35px; text-align: center; margin-bottom: 5px;">Edit</a>
+                                                style="width: 80px; height: 35px; text-align: center; margin-bottom: 5px;">Edit</a>
                                             <form action="{{ route('property.destroy', $property->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -145,13 +160,14 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="12">No properties found.</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                            @else
+                                <tr>
+                                    <td colspan="20">No properties found.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
                     </div>
 
 
@@ -238,24 +254,104 @@
             var dropdown = document.getElementById("filterDropdown");
             dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
         }
-
+        
         function filterTable() {
-            var selectedProperty = document.getElementById("propertyDropdown").value.toLowerCase();
-            var tableRows = document.querySelectorAll("#propertyTableBody tr");
+            let selectedValue = document.getElementById("inventoryTypeDropdown").value.toLowerCase();
+            let tableBody = document.getElementById("propertyTableBody");
+            let tableRows = tableBody.querySelectorAll("tr");
+            let found = false; // To track if any row is visible
 
-            tableRows.forEach((row) => {
-                var propertyTypeCell = row.cells[2];
-                if (propertyTypeCell) {
-                    var propertyType = propertyTypeCell.textContent.trim().toLowerCase();
-                    if (selectedProperty === "select property type" || propertyType === selectedProperty) {
-                        row.style.display = "";
+            tableRows.forEach(row => {
+                let inventoryTypeCell = row.cells[3]; // Adjusted to the correct column index (4th column, zero-based index is 3)
+                
+                if (inventoryTypeCell) {
+                    let inventoryText = inventoryTypeCell.textContent.trim().toLowerCase();
+                    
+                    if (selectedValue === "" || inventoryText.includes(selectedValue)) {
+                        row.style.display = ""; // Show row
+                        found = true;
                     } else {
-                        row.style.display = "none";
+                        row.style.display = "none"; // Hide row
                     }
                 }
             });
+
+            // Remove existing "No Property Found" row if present
+            let noDataRow = document.getElementById("noDataRow");
+            if (noDataRow) {
+                noDataRow.remove();
+            }
+
+            // If no matching rows are found, insert a "No Property Found" row
+            if (!found) {
+                let noDataMessage = document.createElement("tr");
+                noDataMessage.id = "noDataRow";
+                noDataMessage.innerHTML = `<td colspan="20" style="text-align: center; font-weight: bold;">No Property Found</td>`;
+                tableBody.appendChild(noDataMessage);
+            }
         }
 
-        document.getElementById("propertyDropdown").addEventListener("change", filterTable);
+        function cancelFilter() {
+            let tableBody = document.getElementById("propertyTableBody");
+            let tableRows = tableBody.querySelectorAll("tr");
+
+            // Show all rows again
+            tableRows.forEach(row => {
+                row.style.display = "";
+            });
+
+            // Remove "No Property Found" message if present
+            let noDataRow = document.getElementById("noDataRow");
+            if (noDataRow) {
+                noDataRow.remove();
+            }
+
+            // Reset dropdown selection
+            document.getElementById("inventoryTypeDropdown").value = "";
+        }
+
+        // Attach event listener to the correct dropdown
+        document.getElementById("inventoryTypeDropdown").addEventListener("change", filterTable);
     </script>
+
+    <!-- Search function -->
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("search").addEventListener("input", function () {
+                let searchValue = this.value.toLowerCase();
+                let tableRows = document.querySelectorAll("#propertyTableBody tr");
+                let found = false; // Track if any row is visible
+
+                tableRows.forEach(row => {
+                    let cells = row.querySelectorAll("td");
+                    let rowContainsSearchText = Array.from(cells).some(cell => 
+                        cell.textContent.toLowerCase().includes(searchValue)
+                    );
+
+                    if (rowContainsSearchText) {
+                        row.style.display = ""; // Show row
+                        found = true;
+                    } else {
+                        row.style.display = "none"; // Hide row
+                    }
+                });
+
+                // Remove existing "No Property Found" row if present
+                let noDataRow = document.getElementById("noDataRow");
+                if (noDataRow) {
+                    noDataRow.remove();
+                }
+
+                // If no matching rows are found, insert a "No Property Found" row
+                if (!found) {
+                    let noDataMessage = document.createElement("tr");
+                    noDataMessage.id = "noDataRow";
+                    noDataMessage.innerHTML = `<td colspan="20" style="text-align: center; font-weight: bold;">No Property Found</td>`;
+                    document.getElementById("propertyTableBody").appendChild(noDataMessage);
+                }
+            });
+        });
+     </script>
+
+
 @endsection

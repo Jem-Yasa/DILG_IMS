@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.admin_layout') 
 
 @section('title', 'Property Entry')
 
@@ -23,75 +23,116 @@
                             </div>
                         @endif
 
-                            <!-- Property Type -->
-                            <div class="col-md-6 mb-3">
-                                <label for="property_type">Property Type</label>
-                                <select id="property_type" name="property_type" class="form-control">
-                                    <option value="" disabled selected>Select Property Type</option>
-                                    <option value="ICT Equipment">ICT Equipment</option>
-                                    <option value="Office Equipment">Office Equipment</option>
-                                    <option value="Furniture & Fixture">Furniture & Fixture</option>
-                                    <option value="Communication">Communication</option>
-                                    <option value="Books">Books</option>
-                                    <option value="Other Machinery & Equipment">Other Machinery & Equipment</option>
-                                    <option value="Disaster Response & Rescue">Disaster Response & Rescue</option>
-                                    <option value="Building">Building</option>
-                                    <option value="Motor Vehicle">Motor Vehicle</option>
-                                    <option value="Computer Software">Computer Software</option>
-                                </select>
-                            </div>
-
-                            <!-- Entry Name -->
-                            <div class="col-md-6 mb-3">
-                                <label for="entry_name">Entry Name</label>
-                                <input type="text" id="entry_name" name="entry_name" class="form-control">
-                            </div>
-
-                            <!-- Date Acquired -->
-                            <div class="col-md-4 mb-3">
-                                <label for="date_acquired">Date Acquired</label>
-                                <input type="date" id="date_acquired" name="date_acquired" class="form-control">
-                            </div>
-
-                            <!-- ICS/RRSP No. -->
-                            <div class="col-md-4 mb-3">
-                                <label for="ics_rrsp_no">ICS/RRSP No.</label>
-                                <input type="text" id="ics_rrsp_no" name="ics_rrsp_no" class="form-control">
-                            </div>
-
-                            <!-- Reference -->
-                            <div class="col-md-4 mb-3">
-                                <label for="reference">Reference</label>
-                                <input type="text" id="reference" name="reference" class="form-control">
-                            </div>
-
-                            <!-- Semi-expendable Property Name -->
-                            <div class="col-md-6 mb-3">
-                                <label for="semi_expendable_name">Semi-expandable Property Name</label>
-                                <input type="text" id="semi_expendable_name" name="semi_expendable_name" class="form-control">
-                            </div>
-                            
-                            <!-- Semi-expendable Property No. -->
-                            <div class="col-md-6 mb-3">
-                                <label for="semi_expendable_no">Semi-expandable Property No.</label>
-                                <input type="text" id="semi_expendable_no" name="semi_expendable_no" class="form-control">
-                            </div>
-
-                            <!-- Item Description, Estimated Useful Life, and Status in a Single Row -->
+                            <!-- Office, ICS/RRSP No., and Article Inventory Type in One Line -->
                             <div class="col-md-12 mb-3">
                                 <div class="row">
-                                    <!-- Item Description -->
                                     <div class="col-md-4">
-                                        <label for="item_description">Item Description</label>
-                                        <input type="text" id="item_description" name="item_description" class="form-control">
+                                        <label for="office">Office</label>
+                                        <select id="office" name="office" class="form-control">
+                                            <option value="" disabled selected>Select Office</option>
+                                            <option value="FAD">FAD</option>
+                                            <option value="FAD - Accounting">FAD - Accounting</option>
+                                            <option value="FAD - Budget">FAD - Budget</option>
+                                            <option value="FAD - Cash">FAD - Cash</option>
+                                            <option value="FAD - GSU">FAD - GSU</option>
+                                            <option value="FAD - Personnel">FAD - Personnel</option>
+                                            <option value="FAD - Records">FAD - Records</option>
+                                            <option value="FAD - Supply">FAD - Supply</option>
+                                            <option value="LGCDD">LGCDD</option>
+                                            <option value="LGMED">LGMED</option>
+                                            <option value="LGRRC">LGRRC</option>
+                                            <option value="OARD">OARD</option>
+                                            <option value="ORD">ORD</option>
+                                            <option value="ORD - Legal">ORD - Legal</option>
+                                            <option value="ORD - RICTU">ORD - RICTU</option>
+                                            <option value="ORD - SRMU">ORD - SRMU</option>
+                                            <option value="PDMU">PDMU</option>
+                                            <option value="AKLAN">AKLAN</option>
+                                            <option value="ANTIQUE">ANTIQUE</option>
+                                            <option value="CAPIZ">CAPIZ</option>
+                                            <option value="GUIMARAS">GUIMARAS</option>
+                                            <option value="ILOILO PROVINCE">ILOILO PROVINCE</option>
+                                            <option value="ILOILO CITY">ILOILO CITY</option>
+                                        </select>
                                     </div>
+                                    <div class="col-md-4">
+                                        <label for="ics_rrsp_no">ICS/RRSP No.</label>
+                                        <input type="text" id="ics_rrsp_no" name="ics_rrsp_no" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="article_inventory_type">Article Inventory Type</label>
+                                        <select id="article_inventory_type" name="article_inventory_type" class="form-control">
+                                        <option value="" disabled selected>Select Article Inventory Type</option>
+                                        <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option>
+                                        <option value="ICT Equipment HV">ICT Equipment</option>
+                                        <option value="Office Equipment HV">Office Equipment</option>
+                                        <option value="Furniture & Fixture HV">Furniture & Fixture</option>
+                                        <option value="Communication HV">Communication</option>
+                                        <option value="Books LV">Books</option>
+                                        <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option>
+                                        <option value="ICT Equipment LV">ICT Equipment</option>
+                                        <option value="Office Equipment LV">Office Equipment</option>
+                                        <option value="Furniture & Fixture LV">Furniture & Fixture</option>
+                                        <option value="Communication LV">Communication</option>
+                                        <option value="Books LV">Books</option>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <!-- Estimated Useful Life -->
+                            <!-- Description -->
+                            <div class="col-md-12 mb-3">
+                                <label for="description">Description</label>
+                                <input type="text" id="description" name="description" class="form-control">
+                            </div>
+
+                            <!-- Unit of Measure, Unit Value, Quantity in One Line -->
+                            <div class="col-md-12 mb-3">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="unit_measure">Unit of Measure</label>
+                                        <input type="text" id="unit_measure" name="unit_measure" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="unit_value">Unit Value</label>
+                                        <input type="text" id="unit_value" name="unit_value" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="quantity">Quantity</label>
+                                        <input type="text" id="quantity" name="quantity" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Total Cost, Inventory Item No., Date Acquired in One Line -->
+                            <div class="col-md-12 mb-3">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="total_cost">Total Cost</label>
+                                        <input type="text" id="total_cost" name="total_cost" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="inventory_item_no">Inventory Item No.</label>
+                                        <input type="text" id="inventory_item_no" name="inventory_item_no" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="date_acquired">Date Acquired</label>
+                                        <input type="date" id="date_acquired" name="date_acquired" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Estimated Useful Life, Accountable Officer, Status in One Line -->
+                            <div class="col-md-12 mb-3">
+                                <div class="row">
                                     <div class="col-md-4">
                                         <label for="estimated_useful_life">Estimated Useful Life</label>
                                         <input type="text" id="estimated_useful_life" name="estimated_useful_life" class="form-control">
                                     </div>
-
+                                    <div class="col-md-4">
+                                        <label for="accountable_officer">Accountable Officer</label>
+                                        <input type="text" id="accountable_officer" name="accountable_officer" class="form-control">
+                                    </div>
                                     <!-- Status -->
                                     <div class="col-md-4">
                                         <label for="status">Status</label>
@@ -101,32 +142,6 @@
                                             <option value="Returned">Returned</option>
                                             <option value="Re-Issued">Re-Issued</option>
                                         </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Amount, Quantity, and Office/Officer in a Single Row -->
-                            <div class="col-md-12 mb-3">
-                                <div class="row">
-                                    <!-- Amount with Currency Label -->
-                                    <div class="col-md-4">
-                                        <label for="amount">Amount</label>
-                                        <div class="input-group">
-                                            <input type="text" id="amount" name="amount" class="form-control">
-                                            <span class="input-group-text" style="background-color: #ccc; color: black;">PHP</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Quantity -->
-                                    <div class="col-md-4">
-                                        <label for="quantity">Quantity</label>
-                                        <input type="text" id="quantity" name="quantity" class="form-control">
-                                    </div>
-
-                                    <!-- Office/Officer -->
-                                    <div class="col-md-4">
-                                        <label for="office_officer">Office/Officer</label>
-                                        <input type="text" id="office_officer" name="office_officer" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +158,6 @@
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </form>

@@ -14,19 +14,19 @@ class PropertyController extends Controller
     {
         // Validate incoming request data
         $request->validate([
-            'property_type' => 'required|string',
-            'entry_name' => 'required|string|max:255',
-            'date_acquired' => 'required|date',
+            'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
-            'reference' => 'nullable|string|max:255',
-            'semi_expendable_name' => 'nullable|string|max:255',
-            'semi_expendable_no' => 'nullable|string|max:100',
-            'item_description' => 'nullable|string',
+            'article_inventory_type' => 'required|string|max:255',
+            'description' => 'required|string',
+            'unit_measure' => 'required|string|max:100',
+            'unit_value' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'total_cost' => 'required|numeric|min:0',
+            'inventory_item_no' => 'nullable|string|max:100',
+            'date_acquired' => 'required|date',
             'estimated_useful_life' => 'nullable|string|max:100',
+            'accountable_officer' => 'required|string|max:255',
             'status' => 'nullable|string|in:Issued,Returned,Re-Issued',
-            'quantity' => 'nullable|integer|min:0',
-            'office/officer' => 'nullable|string|max:100',
-            'amount' => 'required|numeric|min:0',
             'remarks' => 'nullable|string',
         ]);
 
@@ -39,12 +39,6 @@ class PropertyController extends Controller
     /**
      * Show a list of all property entries.
      */
-    // public function index()
-    // {
-    //     $properties = Property::latest()->paginate(5); // Fetch all properties
-    //     return view('admin.admin-issued_table', compact('properties'));
-    // }
-
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
@@ -75,17 +69,19 @@ class PropertyController extends Controller
     public function update(Request $request, Property $property)
     {
         $request->validate([
-            'property_type' => 'required|string',
-            'entry_name' => 'required|string|max:255',
-            'date_acquired' => 'required|date',
+            'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
-            'reference' => 'nullable|string|max:255',
-            'semi_expendable_name' => 'nullable|string|max:255',
-            'semi_expendable_no' => 'nullable|string|max:100',
-            'item_description' => 'nullable|string',
+            'article_inventory_type' => 'required|string|max:255',
+            'description' => 'required|string',
+            'unit_measure' => 'required|string|max:100',
+            'unit_value' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'total_cost' => 'required|numeric|min:0',
+            'inventory_item_no' => 'nullable|string|max:100',
+            'date_acquired' => 'required|date',
             'estimated_useful_life' => 'nullable|string|max:100',
+            'accountable_officer' => 'required|string|max:255',
             'status' => 'nullable|string|in:Issued,Returned,Re-Issued',
-            'amount' => 'required|numeric|min:0',
             'remarks' => 'nullable|string',
         ]);
 

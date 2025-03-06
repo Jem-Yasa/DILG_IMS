@@ -12,19 +12,19 @@ class Property extends Model
     protected $table = 'properties'; // Ensure this matches your database table name
 
     protected $fillable = [
-        'property_type',
-        'entry_name',
-        'date_acquired',
+        'office',
         'ics_rrsp_no',
-        'reference',
-        'semi_expendable_name',
-        'semi_expendable_no',
-        'item_description',
-        'estimated_useful_life',
-        'status',
+        'article_inventory_type',
+        'description',
+        'unit_measure',
+        'unit_value',
         'quantity',
-        'office_officer',
-        'amount',
+        'total_cost',
+        'inventory_item_no',
+        'date_acquired',
+        'estimated_useful_life',
+        'accountable_officer',
+        'status',
         'remarks',
     ];
 }

@@ -9,20 +9,20 @@ return new class extends Migration {
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('property_type');
-            $table->string('entry_name');
-            $table->date('date_acquired');
-            $table->string('ics_rrsp_no')->nullable();
-            $table->string('reference')->nullable();
-            $table->string('semi_expendable_name')->nullable();
-            $table->string('semi_expendable_no')->nullable();
-            $table->text('item_description')->nullable();
-            $table->string('estimated_useful_life')->nullable();
-            $table->string('status')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->string('office_officer')->nullable();
-            $table->decimal('amount', 10, 2);
-            $table->text('remarks')->nullable();
+            $table->string('office'); // Matches the "Office" dropdown
+            $table->string('ics_rrsp_no')->nullable(); // Matches "ICS/RRSP No."
+            $table->string('article_inventory_type'); // Matches "Article Inventory Type"
+            $table->text('description'); // Matches "Description"
+            $table->string('unit_measure'); // Matches "Unit of Measure"
+            $table->decimal('unit_value', 10, 2); // Matches "Unit Value"
+            $table->integer('quantity'); // Matches "Quantity"
+            $table->decimal('total_cost', 10, 2); // Matches "Total Cost"
+            $table->string('inventory_item_no')->nullable(); // Matches "Inventory Item No."
+            $table->date('date_acquired'); // Matches "Date Acquired"
+            $table->string('estimated_useful_life')->nullable(); // Matches "Estimated Useful Life"
+            $table->string('accountable_officer'); // Matches "Accountable Officer"
+            $table->string('status')->nullable(); // Matches "Status"
+            $table->text('remarks')->nullable(); // Matches "Remarks"
             $table->timestamps();
         });
     }
