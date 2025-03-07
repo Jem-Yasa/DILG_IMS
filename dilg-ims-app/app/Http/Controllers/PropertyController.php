@@ -16,17 +16,18 @@ class PropertyController extends Controller
         $request->validate([
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
-            'article_inventory_type' => 'required|string|max:255',
+            'accountable_type' => 'required|string|max:255',
+            'article' => 'required|string|max:255', // Updated field name
             'description' => 'required|string',
             'unit_measure' => 'required|string|max:100',
             'unit_value' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'total_cost' => 'required|numeric|min:0',
+            'total_cost' => 'nullable|numeric|min:0',
             'inventory_item_no' => 'nullable|string|max:100',
             'date_acquired' => 'required|date',
             'estimated_useful_life' => 'nullable|string|max:100',
             'accountable_officer' => 'required|string|max:255',
-            'status' => 'nullable|string|in:Issued,Returned,Re-Issued',
+            'status' => 'nullable|string|in:Issued,Returned,Re-Issued,Canceled',
             'remarks' => 'nullable|string',
         ]);
 
@@ -42,7 +43,8 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
-        $properties = Property::paginate($perPage);
+        $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
+
         return view('admin.admin-issued_table', compact('properties'));
     }
 
@@ -71,17 +73,18 @@ class PropertyController extends Controller
         $request->validate([
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
-            'article_inventory_type' => 'required|string|max:255',
+            'accountable_type' => 'required|string|max:255',
+            'article' => 'required|string|max:255', // Updated field name
             'description' => 'required|string',
             'unit_measure' => 'required|string|max:100',
             'unit_value' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'total_cost' => 'required|numeric|min:0',
+            'total_cost' => 'nullable|numeric|min:0',
             'inventory_item_no' => 'nullable|string|max:100',
             'date_acquired' => 'required|date',
             'estimated_useful_life' => 'nullable|string|max:100',
             'accountable_officer' => 'required|string|max:255',
-            'status' => 'nullable|string|in:Issued,Returned,Re-Issued',
+            'status' => 'nullable|string|in:Issued,Returned,Re-Issued,Canceled',
             'remarks' => 'nullable|string',
         ]);
 

@@ -14,7 +14,8 @@ class Property extends Model
     protected $fillable = [
         'office',
         'ics_rrsp_no',
-        'article_inventory_type',
+        'accountable_type', // Corrected field name
+        'article', // Corrected field name
         'description',
         'unit_measure',
         'unit_value',

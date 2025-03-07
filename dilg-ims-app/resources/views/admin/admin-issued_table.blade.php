@@ -80,7 +80,7 @@
                                             <option value="Books LV">Books LV</option>
                                         </select>
 
-                                        <button style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
+                                        <button onclick="cancelFilter()" style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
                                             Cancel Filter
                                         </button>
                                     </div>
@@ -93,7 +93,8 @@
                                 <th rowspan="2">Date</th>
                                 <th rowspan="2">Office</th>
                                 <th rowspan="2">ICS/RRSP No.</th>
-                                <th rowspan="2">Article Inventory Type</th>
+                                <th rowspan="2">Accountable type</th>
+                                <th rowspan="2">Article</th>
                                 <th rowspan="2">Description</th>
                                 <th rowspan="2">Unit of Measure</th>
                                 <th rowspan="2">Unit Value</th>
@@ -124,7 +125,8 @@
                                         <td>{{ $property->date_acquired }}</td>
                                         <td>{{ $property->office }}</td>
                                         <td>{{ $property->ics_rrsp_no }}</td>
-                                        <td>{{ $property->article_inventory_type }}</td>
+                                        <td>{{ $property->accountable_type }}</td>
+                                        <td>{{ $property->article }}</td>
                                         <td>{{ $property->description }}</td>
                                         <td>{{ $property->unit_measure }}</td>
                                         <td>{{ $property->unit_value }}</td>
@@ -198,6 +200,7 @@
                                         </li>
                                     @endforeach
 
+                                    
                                     @if ($properties->hasMorePages())
                                         <li class="page-item">
                                             <a class="page-link" href="{{ $properties->nextPageUrl() }}" style="color: white; background-color: #002C76; border-radius: 5px;">Next</a>

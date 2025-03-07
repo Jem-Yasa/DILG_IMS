@@ -9,14 +9,15 @@ return new class extends Migration {
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('office'); // Matches the "Office" dropdown
+            $table->string('office'); // Matches "Office"
             $table->string('ics_rrsp_no')->nullable(); // Matches "ICS/RRSP No."
-            $table->string('article_inventory_type'); // Matches "Article Inventory Type"
+            $table->string('accountable_type'); // Matches "Accountable Type"
+            $table->string('article'); // Corrected from decimal to string
             $table->text('description'); // Matches "Description"
             $table->string('unit_measure'); // Matches "Unit of Measure"
             $table->decimal('unit_value', 10, 2); // Matches "Unit Value"
             $table->integer('quantity'); // Matches "Quantity"
-            $table->decimal('total_cost', 10, 2); // Matches "Total Cost"
+            $table->decimal('total_cost', 10, 2)->nullable(); // Added "Total Cost"
             $table->string('inventory_item_no')->nullable(); // Matches "Inventory Item No."
             $table->date('date_acquired'); // Matches "Date Acquired"
             $table->string('estimated_useful_life')->nullable(); // Matches "Estimated Useful Life"
