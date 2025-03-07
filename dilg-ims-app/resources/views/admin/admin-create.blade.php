@@ -147,4 +147,28 @@
             </div>
         </div>
     </section>
+
+    <!-- Total Cost -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select input fields
+            const unitValueInput = document.getElementById("unit_value");
+            const quantityInput = document.getElementById("quantity");
+            const totalCostInput = document.getElementById("total_cost");
+
+            // Function to calculate total cost
+            function calculateTotalCost() {
+                let unitValue = parseFloat(unitValueInput.value) || 0;
+                let quantity = parseInt(quantityInput.value) || 0;
+                let totalCost = unitValue * quantity;
+
+                totalCostInput.value = totalCost.toFixed(2); // Display as a decimal (e.g., 100.00)
+            }
+
+            // Attach event listeners to update total cost dynamically
+            unitValueInput.addEventListener("input", calculateTotalCost);
+            quantityInput.addEventListener("input", calculateTotalCost);
+        });
+    </script>
+
 @endsection
