@@ -23,19 +23,19 @@
                                 </svg>
                                 Filter
                             </a>
+                    </div>
                 </div>
-                </div>
-                    <div class="table-responsive">
+                <div class="table-responsive">
                         <table class="table table-bordered text-white" style="background-color: #002C76; text-align: center;">
                                 <thead>
                                     <tr>
                                         <th rowspan="2">Date</th>
                                         <th rowspan="2">Reference</th>
                                         <th colspan="3" class="text-center bg-light text-dark">Receipt</th>
+                                        <th rowspan="2">Semi-Expendable Property No.</th>
                                         <th rowspan="2">Semi-Expendable Property</th>
                                         <th rowspan="2">Description</th>
                                         <th colspan="3" class="text-center bg-light text-dark">Issue/Transfer/Disposal</th>
-                                        <th rowspan="2">Semi-Expendable Property No.</th>
                                         <th rowspan="2">Balance Qty</th>
                                         <th rowspan="2">Amount</th>
                                         <th rowspan="2">Remarks</th>
@@ -50,25 +50,42 @@
                                     </tr>
                                 </thead>
                                 <tbody style="color: black; background-color: rgb(196, 196, 196);">
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @if($properties->count() > 0)    
+                                        @foreach($properties as $property)
+                                            <tr>
+                                                <td>{{ $property->date_acquired }}</td>
+                                                <td>{{ $property->ics_rrsp_no }}</td>
+
+                                                <!-- Receipt -->
+                                                <!-- <td>{{ $property->status == 'Issued' ? $property->quantity : '' }}</td>
+                                                <td>{{ $property->status == 'Issued' ? $property->accountable_officer : '' }}</td>
+                                                <td>{{ $property->status == 'Issued' ? $property->accountable_officer : '' }}</td> -->
+                                                <td>{{ $property->quantity }}</td>
+                                                <td>{{ $property->unit_value }}</td>
+                                                <td>{{ $property->total_cost }}</td>
+
+
+                                                <td>{{ $property->accountable_type }}</td>
+                                                <td>{{ $property->description }}</td>
+
+                                                <!-- Issue/Transfer/Disposal  -->
+                                                <td>{{ $property->status == 'Issued' ? $property->quantity : '' }}</td>
+                                                <td>{{ $property->status == 'Issued' ? $property->accountable_officer : '' }}</td>
+                                                <td>{{ $property->status == 'Issued' ? $property->accountable_officer : '' }}</td>
+
+                                                <td></td> <!-- Balance Qty -->
+                                                <td></td> <!-- Balance Qty -->
+                                                <td>{{ $property->remarks }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                            <tr>
+                                                <td colspan="20">No properties found.</td>
+                                            </tr>
+                                    @endif
                                 </tbody>
                         </table>
-                    </div>
+                </div>
                 </div>
             </div>
         </div>

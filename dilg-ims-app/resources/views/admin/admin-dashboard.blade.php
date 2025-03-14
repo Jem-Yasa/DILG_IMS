@@ -7,4 +7,4 @@
     <p>Dashboard ni</p>
 </section>
     
-@endsection. 
+@endsection

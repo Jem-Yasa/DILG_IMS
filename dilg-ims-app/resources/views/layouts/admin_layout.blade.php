@@ -202,9 +202,9 @@
           </div> -->
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1"> Welcome back, Brandon Haynes</h4>
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item">
-              <h4 class="mb-0 font-weight-bold d-none d-xl-block">Feb 12, 2025</h4>
-            </li>
+            <li class="nav-item"> 
+              <h4 id="realTimeDate" class="mb-0 font-weight-bold d-none d-xl-block"></h4>
+            </li> 
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                   <img src="{{ asset('template/images/faces/face5.jpg') }}" alt="profile" class="profile-img"/>
@@ -392,6 +392,17 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+   
+  <!-- realtime date  -->
+      <script>
+      function updateDate() {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'short', day: '2-digit' };
+        document.getElementById('realTimeDate').textContent = today.toLocaleDateString('en-US', options);
+      }
+      
+      updateDate();
+    </script>
 </body>
 
 </html>

@@ -99,7 +99,7 @@
                                 <th rowspan="2">Unit of Measure</th>
                                 <th rowspan="2">Unit Value</th>
                                 <th rowspan="2">Total Cost</th>
-                                <th rowspan="2">Inventory No.</th>
+                                <th rowspan="2">Inventory Item No.</th>
                                 <th rowspan="2">Estimated Useful Life</th>
                                 <th colspan="2" style="color: black; background-color:#e4e4e4;">Issued</th>
                                 <th colspan="2" style="color: black; background-color:#e4e4e4;">Returned</th>
@@ -146,7 +146,7 @@
                                         <td>{{ $property->status == 'Re-Issued' ? $property->quantity : '' }}</td>
                                         <td>{{ $property->status == 'Re-Issued' ? $property->accountable_officer : '' }}</td>
                                         
-                                        <td></td> <!-- Disposal Qty -->
+                                        <td></td> <!-- Balance Qty -->
                                         <td></td> <!-- Balance Qty -->
                                         <td>{{ $property->remarks }}</td>
                                         <td>
@@ -155,9 +155,55 @@
                                             <form action="{{ route('property.destroy', $property->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" 
+                                                <!-- DELETE BUTTON (Inside a table row) -->
+                                                <button type="button" class="btn btn-danger btn-sm" 
                                                         style="width: 80px; height: 35px; text-align: center;" 
-                                                        onclick="return confirm('Are you sure?')">Delete</button>
+                                                        onclick="openDeleteModal(this)" 
+                                                        data-date="{{ $property->date }}" 
+                                                        data-ics="{{ $property->ics_rrsp_no }}" 
+                                                        data-accountable="{{ $property->accountable_type }}" 
+                                                        data-article="{{ $property->article }}" 
+                                                        data-description="{{ $property->description }}">
+                                                    Delete
+                                                </button>
+
+
+                                               <!-- CONFIRMATION MODAL -->
+                                                <div id="deleteModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+                                                    <div style="background: white; padding: 20px; border-radius: 10px; width: 400px; position: relative;">
+                                                        <h2 style="font-weight: bold; text-align: center;">CONFIRM CANCELLATION</h2>
+
+                                                        <!-- Close Button (X) -->
+                                                        <span onclick="closeDeleteModal()" style="position: absolute; top: 10px; right: 15px; font-size: 18px; cursor: pointer;">&times;</span>
+
+                                                        <div style="text-align: left; margin-top: 10px;">
+                                                            <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                                                            <p><strong>ICS/RRSP No.:</strong> <span id="modalICS"></span></p>
+                                                            <p><strong>Accountable Type:</strong> <span id="modalAccountable"></span></p>
+                                                            <p><strong>Article:</strong> <span id="modalArticle"></span></p>
+                                                            <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+
+                                                            <label><strong>Reason:</strong></label>
+                                                            <select id="reasonSelect" class="form-control" style="width: 100%; padding: 8px; margin-bottom: 10px;" onchange="toggleOtherReason()">
+                                                                <option value="" disabled selected>Select Reason</option>
+                                                                <option value="Damaged">Damaged</option>
+                                                                <option value="Lost">Lost</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+
+                                                            <div id="otherReasonContainer" style="display: none;">
+                                                                <label><strong>Others:</strong></label>
+                                                                <input type="text" id="otherReason" class="form-control" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="display: flex; justify-content: space-between;">
+                                                            <button onclick="confirmDelete()" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;">Confirm</button>
+                                                            <button onclick="closeDeleteModal()" style="background-color: #6c757d; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </form>
                                         </td>
                                     </tr>
@@ -169,8 +215,8 @@
                             @endif
                         </tbody>
                     </table>
-
                     </div>
+                    
 
 
                     <!-- Pagination Section -->
@@ -214,8 +260,6 @@
                             </nav>
                         </div>
                     </div>
-                    
-
                 </div>
             </div>
         </div>
@@ -356,5 +400,45 @@
         });
      </script>
 
+<!-- Script Section -->
+<script>
+    function openDeleteModal(button) {
+        var modal = document.getElementById("deleteModal");
+
+        // Populate modal fields with data from button attributes
+        document.getElementById("modalDate").innerText = button.getAttribute("data-date");
+        document.getElementById("modalICS").innerText = button.getAttribute("data-ics");
+        document.getElementById("modalAccountable").innerText = button.getAttribute("data-accountable");
+        document.getElementById("modalArticle").innerText = button.getAttribute("data-article");
+        document.getElementById("modalDescription").innerText = button.getAttribute("data-description");
+
+        // Show modal
+        modal.style.display = "flex";
+        modal.style.backgroundColor = "rgba(0,0,0,0.5)"; // Ensures dark overlay
+    }
+
+    function closeDeleteModal() {
+        document.getElementById("deleteModal").style.display = "none";
+    }
+
+    function confirmDelete() {
+        alert("Record deleted successfully!");
+        closeDeleteModal();
+    }
+
+    function toggleOtherReason() {
+        var reasonSelect = document.getElementById("reasonSelect").value;
+        var otherReasonContainer = document.getElementById("otherReasonContainer");
+        otherReasonContainer.style.display = reasonSelect === "Other" ? "block" : "none";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        var modal = document.getElementById("deleteModal");
+        if (event.target === modal) {
+            closeDeleteModal();
+        }
+    };
+</script>
 
 @endsection

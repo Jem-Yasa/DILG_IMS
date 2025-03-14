@@ -1,9 +1,11 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\IssuedProperty; // Ensure IssuedProperty model is imported
+use App\Models\PropertyHistory; // Import history model
 
 class PropertyController extends Controller
 {
@@ -17,7 +19,7 @@ class PropertyController extends Controller
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
             'accountable_type' => 'required|string|max:255',
-            'article' => 'required|string|max:255', // Updated field name
+            'article' => 'required|string|max:255',
             'description' => 'required|string',
             'unit_measure' => 'required|string|max:100',
             'unit_value' => 'required|numeric|min:0',
@@ -42,11 +44,34 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10); // Default to 10 records per page
+        $perPage = $request->input('per_page', 10);
         $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
 
         return view('admin.admin-issued_table', compact('properties'));
     }
+
+    /**
+     * Show the registry table with all properties.
+     */
+    public function registryTable(Request $request)
+    {
+        $perPage = $request->input('per_page', 10);
+        $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
+
+        return view('admin.admin-registry', compact('properties'));
+    }
+
+    /**
+     * Display the Semi-Expandable Property Card page.
+     */
+    public function semiExpendablePropertyCardTable(Request $request)
+    {
+        $perPage = $request->input('per_page', 10);
+        $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
+
+        return view('admin.admin-semi_card', compact('properties'));
+    }
+    
 
     /**
      * Show a specific property entry.
@@ -74,7 +99,7 @@ class PropertyController extends Controller
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
             'accountable_type' => 'required|string|max:255',
-            'article' => 'required|string|max:255', // Updated field name
+            'article' => 'required|string|max:255',
             'description' => 'required|string',
             'unit_measure' => 'required|string|max:100',
             'unit_value' => 'required|numeric|min:0',
@@ -94,11 +119,17 @@ class PropertyController extends Controller
     }
 
     /**
-     * Delete a specific property entry.
+     * Move a deleted property entry to history instead of deleting permanently.
      */
     public function destroy(Property $property)
     {
+        // Move the record to history before deleting
+        PropertyHistory::create($property->toArray());
+
+        // Delete the original record
         $property->delete();
-        return redirect()->route('properties.index')->with('success', 'Property entry deleted successfully!');
+
+        return redirect()->route('properties.index')->with('success', 'Property entry moved to history successfully!');
     }
 }
+

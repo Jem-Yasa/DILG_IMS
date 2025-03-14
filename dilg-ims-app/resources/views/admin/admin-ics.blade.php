@@ -34,7 +34,7 @@
                                     <th rowspan="2">Unit</th>
                                     <th colspan="2" class="text-center" style="background-color: #ffffff; color: #002f6c;">Amount</th>
                                     <th rowspan="2">Description</th>
-                                    <th rowspan="2">Item No.</th>
+                                    <th rowspan="2">Inventory Item No.</th>
                                     <th rowspan="2">Estimated Useful Life</th>
                                 </tr>
                                 <tr>
@@ -43,15 +43,17 @@
                                 </tr>
                             </thead>
                             <tbody style="color: black; background-color:rgb(196, 196, 196);">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                             
                             </tbody>
                         </table>
                     </div>

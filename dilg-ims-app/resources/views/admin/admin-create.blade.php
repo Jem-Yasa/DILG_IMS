@@ -171,4 +171,16 @@
         });
     </script>
 
+    <!-- useful life -->
+    <script>
+        document.getElementById('estimated_useful_life').addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, ''); // Remove non-numeric characters
+            if (value) {
+                this.value = value + " years";
+            } else {
+                this.value = ""; // Keep empty if no valid number
+            }
+        });
+    </script>
+
 @endsection

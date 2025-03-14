@@ -70,23 +70,38 @@
                             </tr>
                         </thead>
                         <tbody style="color: black; background-color: rgb(196, 196, 196);">
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            @if($properties->count() > 0)    
+                                @foreach($properties as $property)
+                                <tr>
+                                    <td>{{ $property->date_acquired }}</td>
+                                    <td>{{ $property->ics_rrsp_no }}</td>
+                                    <td>{{ $property->inventory_item_no }}</td>
+                                    <td>{{ $property->description }}</td>
+                                    <td>{{ $property->estimated_useful_life }}</td>
+                                    
+                                    <!-- Issued Column -->
+                                    <td>{{ $property->status == 'Issued' ? $property->quantity : '' }}</td>
+                                    <td>{{ $property->status == 'Issued' ? $property->accountable_officer : '' }}</td>
+
+                                    <!-- Returned Column -->
+                                    <td>{{ $property->status == 'Returned' ? $property->quantity : '' }}</td>
+                                    <td>{{ $property->status == 'Returned' ? $property->accountable_officer : '' }}</td>
+
+                                    <!-- Re-Issued Column -->
+                                    <td>{{ $property->status == 'Re-Issued' ? $property->quantity : '' }}</td>
+                                    <td>{{ $property->status == 'Re-Issued' ? $property->accountable_officer : '' }}</td>
+
+                                    <td></td> <!-- Disposal Qty -->
+                                    <td></td> <!-- Balance Qty -->
+                                    <td></td> <!-- Amount -->
+                                    <td>{{ $property->remarks }}</td>
+                                </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="20">No properties found.</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                     </div>
