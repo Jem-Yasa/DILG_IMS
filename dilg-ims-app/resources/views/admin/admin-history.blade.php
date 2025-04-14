@@ -15,28 +15,34 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-white" style="background-color: #002C76;">
+                    <table id="historyTable" class="table table-bordered text-white" style="background-color: #002C76;">
                         <thead>
                             <tr>
-                                <th>Date</th>
+                                <th>Date and Time</th>
                                 <th>ICS/RRSP No</th>
                                 <th>Accountable Type</th>
                                 <th>Article</th>
                                 <th>Description</th>
                                 <th>Reason</th>
-                                <th>Others</th>
                             </tr>
                         </thead>
-                        <tbody style="color: black; background-color: rgb(196, 196, 196);">
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                        <tbody style="color: black; background-color: rgb(196, 196, 196);">   
+                        @if(count($histories) > 0)
+                            @foreach($histories as $history)
+                                <tr>
+                                    <th>{{ $history->created_at }}</th>
+                                    <th>{{ $history->ics_rrsp_no }}</th>
+                                    <th>{{ $history->accountable_type }}</th>
+                                    <th>{{ $history->article }}</th>
+                                    <th>{{ $history->description }}n</th>
+                                    <th>{{ $history->reason }}</th>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="20">No properties found.</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

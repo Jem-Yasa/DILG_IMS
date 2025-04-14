@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
-use App\Models\IssuedProperty;
-use App\Models\PropertyHistory;
+use App\Models\History;
 
 class PropertyController extends Controller
 {
@@ -38,6 +37,39 @@ class PropertyController extends Controller
     }
 
     /**
+     * Move deleted property records to history instead of deleting permanently.
+     */
+    public function destroy(Request $request)
+    {
+        $property = Property::findOrFail($request->id);
+
+        // Move data to history table
+        History::create([
+            'date' => $property->date_acquired,
+            'ics_rrsp_no' => $property->ics_rrsp_no,
+            'accountable_type' => $property->accountable_type,
+            'article' => $property->article,
+            'description' => $property->description,
+            'reason' => 'Deleted',
+            'others' => '',
+        ]);
+
+        // Remove from the main table
+        $property->delete();
+
+        return redirect()->route('admin-history')->with('success', 'Property moved to history.');
+    }
+
+    /**
+     * Display the history table.
+     */
+    public function history()
+    {
+        $histories = History::orderBy('created_at', 'desc')->get();
+        return view('admin.admin-history', compact('histories'));
+    }
+
+    /**
      * Display paginated list of properties.
      */
     public function index(Request $request)
@@ -56,7 +88,7 @@ class PropertyController extends Controller
     }
 
     /**
-     * Show various admin property pages.
+     * Show property acknowledgment receipt pages.
      */
     public function acknowledgmentReceipt(Request $request)
     {
@@ -70,6 +102,9 @@ class PropertyController extends Controller
         return view('admin.admin-par', compact('properties'));
     }
 
+    /**
+     * Show semi-expendable property-related pages.
+     */
     public function semiExpendablePropertyCardTable(Request $request)
     {
         $properties = Property::latest()->paginate($request->input('per_page', 10));
@@ -82,17 +117,18 @@ class PropertyController extends Controller
         return view('admin.admin-ics', compact('properties'));
     }
     
-    
-        public function semiExpendablePropertyLedgerCardTable(Request $request)
+    public function semiExpendablePropertyLedgerCardTable(Request $request)
     {
-        // Fetch properties from database (filtered for 'Semi-Expendable')
-        $properties = Property::where('type', 'Semi-Expendable')->latest()->paginate(10);
-
-        // Pass the data to the view
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
         return view('admin.admin-property_ledger_card', compact('properties'));
     }
 
-   
+    //Expendable Issued
+    public function semiExpendableIssued(Request $request)
+    {
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
+        return view('admin.admin-expendable_issued', compact('properties'));
+    }
 
     /**
      * Show a specific property.
@@ -139,12 +175,35 @@ class PropertyController extends Controller
         return redirect()->route('properties.index')->with('success', 'Property entry updated successfully!');
     }
 
-    /**
-     * Fetch semi-expendable issued items.
-     */
-    public function semiExpendableIssued(Request $request)
+    public function storeHistory(Request $request)
     {
-        $properties = Property::where('type', 'Semi-Expendable')->where('status', 'Issued')->latest()->paginate($request->input('per_page', 10));
-        return view('admin.admin-expendable_issued', compact('properties'));
+        $request->validate([
+            'ics_rrsp_no' => 'required',
+            'accountable_type' => 'required',
+            'article' => 'required',
+            'description' => 'required',
+            'reason' => 'required', // Ensure reason is required
+        ]);
+
+        $reason = $request->reason;
+
+        // If "Other" reason is selected, use the custom input value
+        if ($request->reason === "Other") {
+            $reason = $request->input('other_reason');
+        }
+
+        History::create([
+            'date' => now(),
+            'ics_rrsp_no' => $request->ics_rrsp_no,
+            'accountable_type' => $request->accountable_type,
+            'article' => $request->article,
+            'description' => $request->description,
+            'reason' => $reason, // Store selected/custom reason
+        ]);
+
+        return redirect()->back()->with('success', 'Record successfully moved to history!');
     }
+
+
+    
 }

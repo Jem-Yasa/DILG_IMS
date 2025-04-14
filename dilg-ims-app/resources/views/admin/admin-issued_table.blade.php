@@ -217,14 +217,11 @@
                         </table>
                         </div>
                     
-                        <!-- Pagination Section -->
+                       <!-- Pagination Section -->
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <div>
-                                <span>Showing {{ $properties->firstItem() }} to {{ $properties->lastItem() }} of {{ $properties->total() }} records</span>
-                                </div>
-                                <div>
                                 <nav>
-                                    <ul class="pagination justify-content-center" style="gap: 5px;">
+                                    <ul class="pagination" style="gap: 5px;">
                                         @if ($properties->onFirstPage())
                                             <li class="page-item disabled">
                                                 <span class="page-link" style="background-color: #ccc; border-radius: 5px;">Previous</span>
@@ -244,7 +241,6 @@
                                             </li>
                                         @endforeach
 
-                                        
                                         @if ($properties->hasMorePages())
                                             <li class="page-item">
                                                 <a class="page-link" href="{{ $properties->nextPageUrl() }}" style="color: white; background-color: #002C76; border-radius: 5px;">Next</a>
@@ -257,7 +253,11 @@
                                     </ul>
                                 </nav>
                             </div>
+                            <div>
+                                <span>Showing {{ $properties->firstItem() }} to {{ $properties->lastItem() }} of {{ $properties->total() }} records</span>
+                            </div>
                         </div>
+
                </div>
             </div>
         </div>
@@ -398,45 +398,152 @@
         });
      </script>
 
-<!-- Script Modal-->
+
+<!-- Script Modal -->
 <script>
-    function openDeleteModal(button) {
-        var modal = document.getElementById("deleteModal");
+    document.addEventListener("DOMContentLoaded", function() {
+    loadHistoryRecords(); // Load history records on page load
 
-        // Populate modal fields with data from button attributes
-        document.getElementById("modalDate").innerText = button.getAttribute("data-date");
-        document.getElementById("modalICS").innerText = button.getAttribute("data-ics");
-        document.getElementById("modalAccountable").innerText = button.getAttribute("data-accountable");
-        document.getElementById("modalArticle").innerText = button.getAttribute("data-article");
-        document.getElementById("modalDescription").innerText = button.getAttribute("data-description");
+    // Attach event listener for the reason dropdown
+    document.getElementById("reasonSelect").addEventListener("change", toggleOtherReason);
+});
 
-        // Show modal
-        modal.style.display = "flex";
-        modal.style.backgroundColor = "rgba(0,0,0,0.5)"; // Ensures dark overlay
+function openDeleteModal(button) {
+    var modal = document.getElementById("deleteModal");
+
+    // Store button reference in modal dataset
+    modal.dataset.button = button;
+
+    // Get attributes
+    var date = button.getAttribute("data-date") || new Date().toISOString().split('T')[0];
+    var ics = button.getAttribute("data-ics") || "N/A";
+    var accountable = button.getAttribute("data-accountable") || "N/A";
+    var article = button.getAttribute("data-article") || "N/A";
+    var description = button.getAttribute("data-description") || "N/A";
+
+    // Populate modal fields
+    document.getElementById("modalDate").innerText = date;
+    document.getElementById("modalICS").innerText = ics;
+    document.getElementById("modalAccountable").innerText = accountable;
+    document.getElementById("modalArticle").innerText = article;
+    document.getElementById("modalDescription").innerText = description;
+
+    // Reset reason dropdown and hide the "Other" text box
+    document.getElementById("reasonSelect").value = "";
+    document.getElementById("otherReasonContainer").style.display = "none";
+    document.getElementById("otherReason").value = "";
+
+    // Show modal
+    modal.style.display = "flex";
+    modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+}
+
+function closeDeleteModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+// Function to show input box when "Other" is selected
+function toggleOtherReason() {
+    var reasonSelect = document.getElementById("reasonSelect");
+    var otherReasonContainer = document.getElementById("otherReasonContainer");
+
+    if (reasonSelect.value === "Other") {
+        otherReasonContainer.style.display = "block";
+    } else {
+        otherReasonContainer.style.display = "none";
+        document.getElementById("otherReason").value = ""; // Clear the input when not needed
+    }
+}
+
+function confirmDelete() {
+    var modal = document.getElementById("deleteModal");
+    var button = modal.dataset.button; // Retrieve button reference
+
+    if (!button) {
+        alert("Error: No record selected!");
+        return;
     }
 
-    function closeDeleteModal() {
-        document.getElementById("deleteModal").style.display = "none";
+    // Get the selected reason
+    var reasonSelect = document.getElementById("reasonSelect").value;
+    var otherReason = document.getElementById("otherReason").value;
+    var finalReason = reasonSelect === "Other" ? otherReason : reasonSelect;
+
+    if (!finalReason) {
+        alert("Please select or enter a reason before confirming.");
+        return;
     }
 
-    function confirmDelete() {
-        alert("Record deleted successfully!");
-        closeDeleteModal();
+    // Find the row that contains the delete button
+    var row = button.closest("tr");
+    if (!row) {
+        alert("Error: Unable to find record!");
+        return;
     }
 
-    function toggleOtherReason() {
-        var reasonSelect = document.getElementById("reasonSelect").value;
-        var otherReasonContainer = document.getElementById("otherReasonContainer");
-        otherReasonContainer.style.display = reasonSelect === "Other" ? "block" : "none";
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        var modal = document.getElementById("deleteModal");
-        if (event.target === modal) {
-            closeDeleteModal();
-        }
+    // Extract data from the row
+    var cells = row.getElementsByTagName("td");
+    var record = {
+        date: new Date().toISOString().split('T')[0], // Store current date as deleted date
+        ics: cells[1].innerText,
+        accountable: cells[2].innerText,
+        article: cells[3].innerText,
+        description: cells[4].innerText,
+        reason: finalReason
     };
+
+    // Save to localStorage for persistence
+    saveToHistory(record);
+
+    // Remove the row from the main table
+    row.remove();
+
+    // Close the modal
+    closeDeleteModal();
+
+    // Show success message
+    alert("Record moved to history successfully!");
+}
+
+function saveToHistory(record) {
+    let historyRecords = JSON.parse(localStorage.getItem("historyRecords")) || [];
+    historyRecords.push(record);
+    localStorage.setItem("historyRecords", JSON.stringify(historyRecords));
+
+    // Update the History table
+    updateHistoryTable();
+}
+
+function loadHistoryRecords() {
+    let historyRecords = JSON.parse(localStorage.getItem("historyRecords")) || [];
+    updateHistoryTable(historyRecords);
+}
+
+function updateHistoryTable() {
+    let historyRecords = JSON.parse(localStorage.getItem("historyRecords")) || [];
+    let historyTable = document.querySelector("#historyTable tbody");
+
+    if (!historyTable) return;
+
+    // Clear existing table rows
+    historyTable.innerHTML = "";
+
+    // Append records to table
+    historyRecords.forEach(record => {
+        let row = `<tr>
+            <td>${record.date}</td>
+            <td>${record.ics}</td>
+            <td>${record.accountable}</td>
+            <td>${record.article}</td>
+            <td>${record.description}</td>
+            <td>${record.reason}</td>
+        </tr>`;
+        historyTable.innerHTML += row;
+    });
+}
+
 </script>
+
+
 
 @endsection

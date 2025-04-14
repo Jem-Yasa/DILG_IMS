@@ -32,10 +32,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/property/edit/{id}', 'edit')->name('property.edit'); 
         Route::put('/property/update/{id}', 'update')->name('property.update'); 
         Route::delete('/property/destroy/{id}', 'destroy')->name('property.destroy'); 
+        Route::get('/property/history', 'history')->name('property.history');
+        
     });
 
     // Additional Views
-    Route::view('admin-history', 'admin.admin-history')->name('admin-history');
+    Route::get('admin-history', [PropertyController::class, 'history'])->name('admin-history');
     Route::view('admin-create', 'admin.admin-create')->name('admin-create');
 });
 
