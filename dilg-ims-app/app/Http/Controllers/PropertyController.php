@@ -1,11 +1,11 @@
-<?php 
+<?php  
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
-use App\Models\IssuedProperty; // Ensure IssuedProperty model is imported
-use App\Models\PropertyHistory; // Import history model
+use App\Models\IssuedProperty;
+use App\Models\PropertyHistory;
 
 class PropertyController extends Controller
 {
@@ -14,8 +14,7 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate incoming request data
-        $request->validate([
+        $validatedData = $request->validate([
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
             'accountable_type' => 'required|string|max:255',
@@ -33,48 +32,70 @@ class PropertyController extends Controller
             'remarks' => 'nullable|string',
         ]);
 
-        // Create a new Property record
-        Property::create($request->all());
+        Property::create($validatedData);
 
         return redirect()->back()->with('success', 'Property entry saved successfully!');
     }
 
     /**
-     * Show a list of all property entries.
+     * Display paginated list of properties.
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
-        $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
-
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
         return view('admin.admin-issued_table', compact('properties'));
     }
 
     /**
-     * Show the registry table with all properties.
+     * Show registry table.
      */
     public function registryTable(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
-        $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
-
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
         return view('admin.admin-registry', compact('properties'));
     }
 
     /**
-     * Display the Semi-Expandable Property Card page.
+     * Show various admin property pages.
      */
+    public function acknowledgmentReceipt(Request $request)
+    {
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
+        return view('admin.admin-property_acknowledgment_receipt', compact('properties'));
+    }
+
+    public function propertyAcknowledgmentReceipt(Request $request)
+    {
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
+        return view('admin.admin-par', compact('properties'));
+    }
+
     public function semiExpendablePropertyCardTable(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
-        $properties = Property::orderBy('created_at', 'desc')->paginate($perPage);
-
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
         return view('admin.admin-semi_card', compact('properties'));
     }
+
+    public function inventoryCustodianSlip(Request $request)
+    {
+        $properties = Property::latest()->paginate($request->input('per_page', 10));
+        return view('admin.admin-ics', compact('properties'));
+    }
     
+    
+        public function semiExpendablePropertyLedgerCardTable(Request $request)
+    {
+        // Fetch properties from database (filtered for 'Semi-Expendable')
+        $properties = Property::where('type', 'Semi-Expendable')->latest()->paginate(10);
+
+        // Pass the data to the view
+        return view('admin.admin-property_ledger_card', compact('properties'));
+    }
+
+   
 
     /**
-     * Show a specific property entry.
+     * Show a specific property.
      */
     public function show(Property $property)
     {
@@ -82,7 +103,7 @@ class PropertyController extends Controller
     }
 
     /**
-     * Show the form for editing a property entry.
+     * Edit property entry.
      */
     public function edit($id)
     {
@@ -91,11 +112,11 @@ class PropertyController extends Controller
     }
 
     /**
-     * Update a specific property entry.
+     * Update property entry.
      */
     public function update(Request $request, Property $property)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
             'accountable_type' => 'required|string|max:255',
@@ -113,23 +134,17 @@ class PropertyController extends Controller
             'remarks' => 'nullable|string',
         ]);
 
-        $property->update($request->all());
+        $property->update($validatedData);
 
         return redirect()->route('properties.index')->with('success', 'Property entry updated successfully!');
     }
 
     /**
-     * Move a deleted property entry to history instead of deleting permanently.
+     * Fetch semi-expendable issued items.
      */
-    public function destroy(Property $property)
+    public function semiExpendableIssued(Request $request)
     {
-        // Move the record to history before deleting
-        PropertyHistory::create($property->toArray());
-
-        // Delete the original record
-        $property->delete();
-
-        return redirect()->route('properties.index')->with('success', 'Property entry moved to history successfully!');
+        $properties = Property::where('type', 'Semi-Expendable')->where('status', 'Issued')->latest()->paginate($request->input('per_page', 10));
+        return view('admin.admin-expendable_issued', compact('properties'));
     }
 }
-

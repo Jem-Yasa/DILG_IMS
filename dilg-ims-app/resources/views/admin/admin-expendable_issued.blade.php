@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.admin_layout') 
 
 @section('title', 'Reports of Semi-Expendable Issued')
 
@@ -41,22 +41,30 @@
                                     <th>Amount</th>
                                 </tr>
                             </thead>
-                            <tbody  style="color: black; background-color:rgb(196, 196, 196);">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                        </tbody>
+                            <tbody style="color: black; background-color: rgb(196, 196, 196);">
+                                @if($items->count() > 0)
+                                        @foreach ($items as $item)
+                                            <tr>
+                                                <td>{{ $item->ics_no }}</td>
+                                                <td></td>
+                                                <td>{{ $item->property_no }}</td>
+                                                <td>{{ $item->item_description }}</td>
+                                                <td>{{ $item->unit }}</td>
+                                                <td>{{ $item->quantity_issued }}</td>
+                                                <td>{{ $item->unit_cost }}</td>
+                                                <td>{{ $item->amount }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8" class="text-center">No semi-expendable properties found.</td>
+                                        </tr>
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
 @endsection

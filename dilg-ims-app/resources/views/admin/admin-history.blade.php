@@ -28,23 +28,15 @@
                             </tr>
                         </thead>
                         <tbody style="color: black; background-color: rgb(196, 196, 196);">
-                            @if ($canceledProperties->count() > 0)
-                                @foreach ($canceledProperties as $property)
                                     <tr>
-                                        <td>{{ $property->date_acquired }}</td>
-                                        <td>{{ $property->ics_rrsp_no }}</td>
-                                        <td>{{ $property->accountable_type }}</td>
-                                        <td>{{ $property->article }}</td>
-                                        <td>{{ $property->description }}</td>
-                                        <td>{{ $property->reason }}</td>
-                                        <td>{{ $property->other_reason }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="7" class="text-center">No canceled properties found.</td>
-                                </tr>
-                            @endif
                         </tbody>
                     </table>
                 </div>
