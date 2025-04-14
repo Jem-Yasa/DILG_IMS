@@ -106,9 +106,9 @@
                             </tr>
                             @endforeach
                             @else
-                                <tr>
-                                 <td colspan="20">No properties found.</td>
-                               </tr>
+                            <tr id="noDataRow" style="display: none;">
+                                <td colspan="6" class="text-center text-danger">No matching records found.</td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>

@@ -9,6 +9,16 @@
             <div class="container">
                 <h3 class="mb-4">Inventory Custodian Slip</h3>
                 
+                <label for="recordsPerPage" class="me-2">Show</label>
+                            <select id="recordsPerPage" class="form-select form-select-sm me-2" style="width: 70px;" onchange="updateRecordsPerPage()">
+                                <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            </select>
+                            <span>records</span>
+                        </div>
+                
                 <!-- Search & Filter Container -->
                 <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 10px; position: relative;">
                     <!-- Search Bar -->

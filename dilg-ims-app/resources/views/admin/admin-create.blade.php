@@ -151,25 +151,44 @@
     <!-- Total Cost -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Select input fields
             const unitValueInput = document.getElementById("unit_value");
             const quantityInput = document.getElementById("quantity");
             const totalCostInput = document.getElementById("total_cost");
 
-            // Function to calculate total cost
-            function calculateTotalCost() {
-                let unitValue = parseFloat(unitValueInput.value) || 0;
-                let quantity = parseInt(quantityInput.value) || 0;
-                let totalCost = unitValue * quantity;
-
-                totalCostInput.value = totalCost.toFixed(2); // Display as a decimal (e.g., 100.00)
+            function formatWithCommas(x) {
+                const parts = x.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
             }
 
-            // Attach event listeners to update total cost dynamically
-            unitValueInput.addEventListener("input", calculateTotalCost);
-            quantityInput.addEventListener("input", calculateTotalCost);
+            function unformatNumber(str) {
+                return parseFloat(str.replace(/,/g, '')) || 0;
+            }
+
+            function calculateTotal() {
+                const unitValue = unformatNumber(unitValueInput.value);
+                const quantity = parseFloat(quantityInput.value) || 0;
+                const total = unitValue * quantity;
+                totalCostInput.value = formatWithCommas(total.toFixed(2));
+            }
+
+            // Allow user to type freely without formatting until they leave the input
+            unitValueInput.addEventListener("input", function () {
+                // Just calculate without formatting
+                calculateTotal();
+            });
+
+            // Format on blur (when input loses focus)
+            unitValueInput.addEventListener("blur", function () {
+                const raw = unformatNumber(this.value);
+                this.value = formatWithCommas(raw.toFixed(2));
+            });
+
+            // Keep formatting for total cost only
+            quantityInput.addEventListener("input", calculateTotal);
         });
     </script>
+
 
     <!-- useful life -->
     <script>

@@ -6,23 +6,22 @@
 <section class="section">
     <div class="card">
         <div class="card-body">
-            <h3 class="mb-4">Propert Acknowledgment Receipt</h3>
+            <h3 class="mb-4">Property Acknowledgment Receipt</h3>
             <div class="container">
 
                 <!-- Top Row: Show Records & Search -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Left: Show Records Dropdown -->
-                    <div class="d-flex align-items-center">
-                        <label for="recordsPerPage" class="me-2">Show</label>
-                        <select id="recordsPerPage" class="form-select form-select-sm me-2"
-                            style="width: 70px; margin: 0 5px;" onchange="updateRecordsPerPage()">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                        </select>
-                        <span>records</span>
-                    </div>
+                    <div class="d-flex align-items-center mb-2 mb-md-0">
+                            <label for="recordsPerPage" class="me-2">Show</label>
+                            <select id="recordsPerPage" class="form-select form-select-sm me-2" style="width: 70px;" onchange="updateRecordsPerPage()">
+                                <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            </select>
+                            <span>records</span>
+                        </div>
 
                             <!-- Search & Filter Container -->
                             <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 10px; position: relative;">
@@ -35,7 +34,7 @@
                                 </div>
 
                                 <!-- Filter Button -->
-                                <button id="filterButton" class="btn d-flex align-items-center" 
+                                <!-- <button id="filterButton" class="btn d-flex align-items-center" 
                                         style="width: 130px; height: 40px; display: flex; align-items: center; justify-content: center; 
                                         font-weight: bold; border-radius: 5px; background-color: rgb(30, 194, 38); color: white; border: none; 
                                         gap: 8px; text-decoration: none;"
@@ -44,20 +43,20 @@
                                         <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2.5a1 1 0 01-.293.707L11 12.914V17a1 1 0 01-.447.894l-2 1A1 1 0 017 18v-5.086L3.293 7.207A1 1 0 013 6.5V4z" clip-rule="evenodd"/>
                                     </svg>
                                     Filter
-                                </button>
+                                </button> -->
                                             
 
                         <!-- Inventory Type Filter -->
-                        <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
+                        <!-- <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
                             <select id="inventoryTypeDropdown" class="form-select" style="width: 100%; padding: 5px;">
-                                <option value="" disabled selected>Select Article Inventory Type</option> <!-- Non-Selectable Label -->
-                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option> <!-- Non-Selectable Label -->
+                                <option value="" disabled selected>Select Article Inventory Type</option>
+                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option> 
                                 <option value="ICT Equipment HV">ICT Equipment</option>
                                 <option value="Office Equipment HV">Office Equipment</option>
                                 <option value="Furniture & Fixture HV">Furniture & Fixture</option>
                                 <option value="Communication HV">Communication</option>
                                 <option value="Books HV">Books HV</option>
-                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option> <!-- Non-Selectable Label -->
+                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option> 
                                 <option value="ICT Equipment LV">ICT Equipment</option>
                                 <option value="Office Equipment LV">Office Equipment</option>
                                 <option value="Furniture & Fixture LV">Furniture & Fixture</option>
@@ -68,7 +67,7 @@
                                     <button onclick="cancelFilter()" style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
                                         Cancel Filter
                                     </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -96,6 +95,9 @@
                                 <td>{{ number_format($property->total_cost, 2) }}</td>
                             </tr>
                             @endforeach
+                            <tr id="noDataRow" style="display: none;">
+                                <td colspan="6" class="text-center text-danger">No matching records found.</td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -146,29 +148,52 @@
     </div>
 </section>
 
+
+
 <script>
-function filterTable() {
-    let searchValue = document.getElementById("search").value.toLowerCase();
-    let filterValue = document.getElementById("inventoryTypeDropdown").value;
-    let table = document.getElementById("tableBody");
-    let rows = table.getElementsByTagName("tr");
+    
+    function updateRecordsPerPage() {
+    const perPage = document.getElementById("recordsPerPage").value;
+    const searchParams = new URLSearchParams(window.location.search);
 
-    for (let i = 0; i < rows.length; i++) {
-        let cells = rows[i].getElementsByTagName("td");
-        let matchSearch = searchValue === "" || cells[3].innerText.toLowerCase().includes(searchValue);
-        let matchFilter = filterValue === "" || cells[3].innerText.includes(filterValue);
-        rows[i].style.display = matchSearch && matchFilter ? "" : "none";
-    }
+    searchParams.set('per_page', perPage);
+    searchParams.set('page', 1); // Reset to page 1 when per page changes
+
+    window.location.search = searchParams.toString();
 }
 
-function toggleFilterDropdown() {
-    let filterDropdown = document.getElementById("filterDropdown");
-    filterDropdown.style.display = filterDropdown.style.display === "none" ? "block" : "none";
-}
+        // SEARCH FUNCTION
 
-function cancelFilter() {
-    document.getElementById("inventoryTypeDropdown").value = "";
-    filterTable();
-}
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search");
+        const tableBody = document.getElementById("tableBody");
+        const rows = tableBody.getElementsByTagName("tr");
+
+        searchInput.addEventListener("keyup", function () {
+            let searchText = searchInput.value.toLowerCase();
+            let found = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                let row = rows[i];
+                let textContent = row.textContent.toLowerCase();
+
+                if (textContent.includes(searchText)) {
+                    row.style.display = "";
+                    found = true;
+                } else {
+                    row.style.display = "none";
+                }
+            }
+
+            // Optional: Show "No Data Found" row if needed
+            let noDataRow = document.getElementById("noDataRow");
+            if (noDataRow) {
+                noDataRow.style.display = found ? "none" : "";
+            }
+        });
+    });
+
+
+
 </script>
 @endsection
