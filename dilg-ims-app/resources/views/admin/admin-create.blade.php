@@ -9,6 +9,18 @@
                 Property Entry
             </div>
             <div class="card-body">
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+
                 <form action="{{ route('property.store') }}" method="POST">
                     @csrf
                     <div class="container">
@@ -92,15 +104,19 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label for="unit_value">Unit Value</label>
-                                <input type="text" id="unit_value" name="unit_value" class="form-control">
+                                {{-- <input type="number" id="unit_value" name="unit_value" class="form-control"> --}}
+                                <input type="text" name="unit_value" id="unit_value" class="form-control" value="{{ old('unit_value', number_format($record->unit_value ?? 0, 2)) }}">
                             </div>
                             <div class="col-md-4">
                                 <label for="quantity">Quantity</label>
-                                <input type="text" id="quantity" name="quantity" class="form-control">
+                                {{-- <input type="text" id="quantity" name="quantity" class="form-control"> --}}
+                                <input type="number" name="quantity" id="quantity" class="form-control" value="{{ old('quantity', $record->quantity ?? '') }}" min="1">
                             </div>
                             <div class="col-md-4">
                                 <label for="total_cost">Total Cost</label>
-                                <input type="text" id="total_cost" name="total_cost" class="form-control">
+                                {{-- <input type="number" id="total_cost" name="total_cost" class="form-control"> --}}
+                                {{-- <input type="text" name="total_cost" id="total_cost" class="form-control" value="{{ old('total_cost', number_format($record->total_cost ?? 0, 2)) }}"> --}}
+                                <input type="text" name="total_cost" id="total_cost" class="form-control" value="{{ old('total_cost', number_format($record->total_cost ?? 0, 2)) }}" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label for="inventory_item_no">Inventory Item No.</label>
@@ -149,7 +165,7 @@
     </section>
 
     <!-- Total Cost -->
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             const unitValueInput = document.getElementById("unit_value");
             const quantityInput = document.getElementById("quantity");
@@ -172,20 +188,70 @@
                 totalCostInput.value = formatWithCommas(total.toFixed(2));
             }
 
-            // Allow user to type freely without formatting until they leave the input
             unitValueInput.addEventListener("input", function () {
-                // Just calculate without formatting
                 calculateTotal();
             });
 
-            // Format on blur (when input loses focus)
             unitValueInput.addEventListener("blur", function () {
                 const raw = unformatNumber(this.value);
                 this.value = formatWithCommas(raw.toFixed(2));
             });
 
-            // Keep formatting for total cost only
             quantityInput.addEventListener("input", calculateTotal);
+        });
+    </script> --}}
+    <script>
+        function formatNumberWithCommas(x) {
+            const parts = x.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+
+        function removeCommas(value) {
+            return value.replace(/,/g, "");
+        }
+
+        function calculateTotalCost() {
+            const unitRaw = removeCommas(document.getElementById("unit_value").value);
+            const quantity = parseFloat(document.getElementById("quantity").value);
+
+            if (!isNaN(unitRaw) && !isNaN(quantity)) {
+                const total = parseFloat(unitRaw) * quantity;
+                document.getElementById("total_cost").value = formatNumberWithCommas(total);
+            } else {
+                document.getElementById("total_cost").value = '';
+            }
+        }
+
+        // Apply formatting as user types
+        document.getElementById("unit_value").addEventListener("input", function (e) {
+            const raw = removeCommas(e.target.value);
+            if (!isNaN(raw)) {
+                e.target.value = formatNumberWithCommas(raw);
+            }
+            calculateTotalCost();
+        });
+
+        document.getElementById("quantity").addEventListener("input", function () {
+            calculateTotalCost();
+        });
+
+        // document.getElementById("total_cost").addEventListener("input", function (e) {
+        //     const raw = removeCommas(e.target.value);
+        //     if (!isNaN(raw)) {
+        //         e.target.value = formatNumberWithCommas(raw);
+        //     }
+        // });
+
+        // Before form submit, strip commas
+        document.querySelector("form").addEventListener("submit", function () {
+            // const unitField = document.getElementById("unit_value");
+            // const totalField = document.getElementById("total_cost");
+
+            // unitField.value = removeCommas(unitField.value);
+            // totalField.value = removeCommas(totalField.value);
+            document.getElementById("unit_value").value = removeCommas(document.getElementById("unit_value").value);
+            document.getElementById("total_cost").value = removeCommas(document.getElementById("total_cost").value);
         });
     </script>
 
