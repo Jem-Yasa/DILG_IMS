@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 namespace App\Http\Controllers;
 
@@ -30,6 +30,9 @@ class PropertyController extends Controller
             'status' => 'nullable|string|in:Issued,Returned,Re-Issued,Canceled',
             'remarks' => 'nullable|string',
         ]);
+
+        $validatedData['unit_value'] = str_replace(',', '', $request->input('unit_value'));
+        $validatedData['total_cost'] = str_replace(',', '', $request->input('total_cost'));
 
         Property::create($validatedData);
 
@@ -98,7 +101,8 @@ class PropertyController extends Controller
 
     public function propertyAcknowledgmentReceipt(Request $request)
     {
-        $properties = Property::latest()->paginate($request->input('per_page', 10));
+        // $properties = Property::latest()->paginate($request->input('per_page', 10));
+        $properties = Property::where('total_cost', '>=', 50000)->paginate($request->input('per_page', 10));
         return view('admin.admin-par', compact('properties'));
     }
 
@@ -113,10 +117,11 @@ class PropertyController extends Controller
 
     public function inventoryCustodianSlip(Request $request)
     {
-        $properties = Property::latest()->paginate($request->input('per_page', 10));
+        // $properties = Property::latest()->paginate($request->input('per_page', 10));
+        $properties = Property::where('total_cost', '<', 50000)->paginate($request->input('per_page', 10));
         return view('admin.admin-ics', compact('properties'));
     }
-    
+
     public function semiExpendablePropertyLedgerCardTable(Request $request)
     {
         $properties = Property::latest()->paginate($request->input('per_page', 10));
@@ -205,5 +210,5 @@ class PropertyController extends Controller
     }
 
 
-    
+
 }
