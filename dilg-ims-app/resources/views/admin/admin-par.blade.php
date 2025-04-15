@@ -192,8 +192,5 @@
             }
         });
     });
-
-
-
 </script>
 @endsection

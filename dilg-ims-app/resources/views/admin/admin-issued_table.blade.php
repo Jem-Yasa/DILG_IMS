@@ -10,8 +10,8 @@
                 <div class="container mt-4">
                      <div class="d-flex justify-content-between align-items-center mb-3">
                   
-                        <!-- Left: Show Records Dropdown -->
-                        <div class="d-flex align-items-center">
+                       <!-- Left: Show Records Dropdown -->
+                       <div class="d-flex align-items-center">
                             <label for="recordsPerPage" class="me-2">Show</label>
                             <select id="recordsPerPage" class="form-select form-select-sm me-2" style="width: 70px; margin: 0 5px;" onchange="updateRecordsPerPage()">
                                 <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
@@ -22,7 +22,7 @@
                             <span>records</span>
                         </div>
 
-                        <!-- Right: Search, Create, and Filter Buttons -->
+                        <!-- Right: Search, and Filter Buttons -->
                         <div class="d-flex align-items-center">
                         <label for="search">Search:</label>
                             <input type="text" id="search" 
@@ -40,7 +40,7 @@
                                     </a>
 
                                     <!-- Filter Button -->
-                                        <button id="filterButton" class="btn d-flex align-items-center" 
+                                    <button id="filterButton" class="btn d-flex align-items-center" 
                                             style="width: 130px; height: 40px; display: flex; align-items: center; justify-content: center; 
                                             font-weight: bold; border-radius: 5px; background-color: rgb(30, 194, 38); color: white; border: none; 
                                             gap: 8px; text-decoration: none;"
