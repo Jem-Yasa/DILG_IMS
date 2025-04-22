@@ -94,6 +94,7 @@
                                     <th rowspan="2">Office</th>
                                     <th rowspan="2">ICS/RRSP No.</th>
                                     <th rowspan="2">Accountable type</th>
+                                    <th rowspan="2">Value</th>
                                     <th rowspan="2">Article</th>
                                     <th rowspan="2">Description</th>
                                     <th rowspan="2">Unit of Measure</th>
@@ -126,6 +127,7 @@
                                             <td>{{ $property->office }}</td>
                                             <td>{{ $property->ics_rrsp_no }}</td>
                                             <td>{{ $property->accountable_type }}</td>
+                                            <td>{{ $property->value }}</td>
                                             <td>{{ $property->article }}</td>
                                             <td>{{ $property->description }}</td>
                                             <td>{{ $property->unit_measure }}</td>

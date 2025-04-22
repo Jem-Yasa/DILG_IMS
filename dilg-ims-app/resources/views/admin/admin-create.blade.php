@@ -32,57 +32,59 @@
                         @endif
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="office">Office</label>
                                 <select id="office" name="office" class="form-control">
-                                <option value="" disabled selected>Select Office</option>
-                                <option value="FAD">FAD</option>
-                                <option value="FAD - Accounting">FAD - Accounting</option>
-                                <option value="FAD - Budget">FAD - Budget</option>
-                                <option value="FAD - Cash">FAD - Cash</option>
-                                <option value="FAD - GSU">FAD - GSU</option>
-                                <option value="FAD - Personnel">FAD - Personnel</option>
-                                <option value="FAD - Records">FAD - Records</option>
-                                <option value="FAD - Supply">FAD - Supply</option>
-                                <option value="LGCDD">LGCDD</option>
-                                <option value="LGMED">LGMED</option>
-                                <option value="LGRRC">LGRRC</option>
-                                <option value="OARD">OARD</option>
-                                <option value="ORD">ORD</option>
-                                <option value="ORD - Legal">ORD - Legal</option>
-                                <option value="ORD - RICTU">ORD - RICTU</option>
-                                <option value="ORD - SRMU">ORD - SRMU</option>
-                                <option value="PDMU">PDMU</option>
-                                <option value="PDMU">OPCEN</option>
-                                <option value="AKLAN">AKLAN</option>
-                                <option value="ANTIQUE">ANTIQUE</option>
-                                <option value="CAPIZ">CAPIZ</option>
-                                <option value="GUIMARAS">GUIMARAS</option>
-                                <option value="ILOILO PROVINCE">ILOILO PROVINCE</option>
-                                <option value="ILOILO CITY">ILOILO CITY</option>
-                            </select>
+                                    <option value="" disabled selected>Select Office</option>
+                                    <option value="FAD">FAD</option>
+                                    <option value="FAD - Accounting">FAD - Accounting</option>
+                                    <option value="FAD - Budget">FAD - Budget</option>
+                                    <option value="FAD - Cash">FAD - Cash</option>
+                                    <option value="FAD - GSU">FAD - GSU</option>
+                                    <option value="FAD - Personnel">FAD - Personnel</option>
+                                    <option value="FAD - Records">FAD - Records</option>
+                                    <option value="FAD - Supply">FAD - Supply</option>
+                                    <option value="LGCDD">LGCDD</option>
+                                    <option value="LGMED">LGMED</option>
+                                    <option value="LGRRC">LGRRC</option>
+                                    <option value="OARD">OARD</option>
+                                    <option value="ORD">ORD</option>
+                                    <option value="ORD - Legal">ORD - Legal</option>
+                                    <option value="ORD - RICTU">ORD - RICTU</option>
+                                    <option value="ORD - SRMU">ORD - SRMU</option>
+                                    <option value="COA">COA</option>
+                                    <option value="PDMU">PDMU</option>
+                                    <option value="OPCEN">OPCEN</option>
+                                    <option value="AKLAN">AKLAN</option>
+                                    <option value="ANTIQUE">ANTIQUE</option>
+                                    <option value="CAPIZ">CAPIZ</option>
+                                    <option value="GUIMARAS">GUIMARAS</option>
+                                    <option value="ILOILO PROVINCE">ILOILO PROVINCE</option>
+                                    <option value="ILOILO CITY">ILOILO CITY</option>
+                                </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="ics_rrsp_no">ICS/RRSP No.</label>
                                 <input type="text" id="ics_rrsp_no" name="ics_rrsp_no" class="form-control">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="accountable_type">Accountable Type</label>
                                 <select id="accountable_type" name="accountable_type" class="form-control">
-                                <option value="" disabled selected>Accountable Type</option>
-                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option>
-                                <option value="ICT Equipment HV">ICT Equipment</option>
-                                <option value="Office Equipment HV">Office Equipment</option>
-                                <option value="Furniture & Fixture HV">Furniture & Fixture</option>
-                                <option value="Communication HV">Communication</option>
-                                <option value="Books LV">Books</option>
-                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option>
-                                <option value="ICT Equipment LV">ICT Equipment</option>
-                                <option value="Office Equipment LV">Office Equipment</option>
-                                <option value="Furniture & Fixture LV">Furniture & Fixture</option>
-                                <option value="Communication LV">Communication</option>
-                                <option value="Books LV">Books</option>
-                            </select>
+                                    <option value="" disabled selected>Accountable Type</option>
+                                    <option value="ICT Equipment">ICT Equipment</option>
+                                    <option value="Office Equipment">Office Equipment</option>
+                                    <option value="Furniture & Fixture">Furniture & Fixture</option>
+                                    <option value="Communication">Communication</option>
+                                    <option value="Books">Books</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="value">Value</label>
+                                <select id="value" name="value" class="form-control">
+                                    <option value="" disabled selected>Value</option>
+                                    <option value="High">High</option>
+                                    <option value="Low">Low</option>
+                                </select>
                             </div>
                         </div>
 

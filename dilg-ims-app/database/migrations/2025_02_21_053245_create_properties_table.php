@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('office'); // Matches "Office"
             $table->string('ics_rrsp_no')->nullable(); // Matches "ICS/RRSP No."
             $table->string('accountable_type'); // Matches "Accountable Type"
+            $table->string('value');
             $table->string('article'); // Corrected from decimal to string
             $table->text('description'); // Matches "Description"
             $table->string('unit_measure'); // Matches "Unit of Measure"

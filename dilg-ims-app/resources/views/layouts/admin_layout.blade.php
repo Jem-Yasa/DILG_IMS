@@ -73,123 +73,150 @@
   <div class="container-scroller d-flex">
     <div class="row p-0 m-0 proBanner" id="proBanner">
       <div class="col-md-12 p-0 m-0">
-        <!-- <div class="card-body card-body-padding d-flex align-items-center justify-content-between">
-          <div class="ps-lg-1">
-            <div class="d-flex align-items-center justify-content-between">
-              <p class="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with this template!</p>
-              <a href="https://www.bootstrapdash.com/product/spica-admin/?utm_source=organic&utm_medium=banner&utm_campaign=buynow_demo" target="_blank" class="btn me-2 buy-now-btn border-0">Get Pro</a>
-            </div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <a href="https://www.bootstrapdash.com/product/spica-admin/"><i class="mdi mdi-home me-3 text-white"></i></a>
-            <button id="bannerClose" class="btn border-0 p-0">
-              <i class="mdi mdi-close text-white mr-0"></i>
-            </button>
-          </div>
-        </div> -->
+
       </div>
     </div>
 
     <!-- partial:./partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <ul class="nav">
-        <!-- <li class="nav-item sidebar-category">
-          <p>Navigation</p>
-          <span></span>
-        </li> -->
+    <style>
+  body {
+    margin: 0;
+    display: flex;
+  }
 
-              <!-- Logo -->
-              <li class="nav-item" style="text-align: center; margin-bottom: -10px;">
-                  <a class="nav-link" href="index.html">
-                      <img src="{{ asset('assets/img/dilg_logo.png') }}" alt="DILG Logo" class="sidebar-logo" style="width: 150px; height: auto; margin-bottom: -10px;">
-                  </a>
-              </li>
+  .sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2c3e50; /* adjust as needed */
+    overflow-y: auto;
+    z-index: 1000;
+  }
 
-              <!-- REGION VI -->
-              <li class="nav-item sidebar-category" style="text-align: center; margin-top: 5px;">
-                  <p class="region-text" style="font-size: 30px; color: white; font-weight: bold; margin-top: 0;">REGION VI</p>
-              </li>
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+  }
 
-              <hr class="menu-divider"> <!-- Divider Line -->
+  .menu-title {
+    font-size: 14px;
+    line-height: 1.3;
+  }
 
-        <!-- dashboard -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-dashboard') }}">
-            <i class="mdi mdi-view-quilt menu-icon"></i>
-            <span class="menu-title">Dashboard</span>
-          </a>
-        </li>
+  .sidebar-logo {
+    max-width: 100%;
+    height: auto;
+  }
 
-        <!-- issued -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-issued_table') }}">
-            <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">Property Issued <br>Table</span>
-          </a>
-        </li>
-  
-        <!-- Property Card -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-registry') }}">
-          <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">Registry of <br>Semi-Expendable <br>Property Issued</span>
-          </a>
-        </li>
-        
-        <!-- semi-Card -->
-        <li class="nav-item">
-                  <a class="nav-link" href="{{ route('admin-semi_card') }}">
-                  <i class="mdi mdi-receipt-text menu-icon"></i>
-                    <span class="menu-title">Semi-Expendable <br>Property-Card</span>
-                  </a>
-                </li>
+    .navbar {
+    position: fixed;
+    top: 0;
+    left: 250px; /* width of sidebar */
+    width: calc(100% - 250px);
+    z-index: 1001;
+    background-color: #fff; /* or any bg color to match your theme */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
 
-        <!-- Ledger Card -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-property_ledger_card') }}">
-          <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">Semi-Expendable <br>Property Ledger Card</span>
-          </a>
-        </li>
+  .main-content {
+    margin-left: 250px;
+    margin-top: 70px; /* height of navbar */
+    padding: 20px;
+    width: calc(100% - 250px);
+    overflow-y: auto;
+    height: calc(100vh - 70px); /* subtract navbar height */
+  }
 
-        <!-- ICS -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-ics') }}">
-          <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">Inventory Custodian Slip</span>
-          </a>
-        </li>
+</style>
 
-        <!-- Report of Semi-Expndable Issued -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-expendable_issued') }}">
-          <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">Report of <br>Semi-Expendable Issued</span>
-          </a>
-        </li>
 
-        <!-- Property Acknowledgment Receipt -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-par') }}">
-          <i class="mdi mdi-receipt menu-icon"></i>
-            <span class="menu-title">Property <br>Acknowledgment Receipt</span>
-          </a>
-        </li>
 
-        <!-- History -->
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin-history') }}">
-          <i class="mdi mdi-receipt-text menu-icon"></i>
-            <span class="menu-title">History</span>
-          </a>
-        </li>
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item" style="text-align: center; margin-bottom: -10px;">
+      <a class="nav-link" href="index.html">
+        <img src="{{ asset('assets/img/dilg_logo.png') }}" alt="DILG Logo" class="sidebar-logo" style="width: 150px; height: auto; margin-bottom: -10px;">
+      </a>
+    </li>
 
-      </ul>
-    </nav>
+    <li class="nav-item sidebar-category" style="text-align: center; margin-top: 5px;">
+      <p class="region-text" style="font-size: 30px; color: white; font-weight: bold; margin-top: 0;">REGION VI</p>
+    </li>
+
+    <hr class="menu-divider">
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-dashboard') }}">
+        <i class="mdi mdi-view-quilt menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-issued_table') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">Property Issued <br>Table</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-registry') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">Registry of <br>Semi-Expendable <br>Property Issued</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-semi_card') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">Semi-Expendable <br>Property-Card</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-property_ledger_card') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">Semi-Expendable <br>Property Ledger Card</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-ics') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">Inventory Custodian Slip</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-expendable_issued') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">Report of <br>Semi-Expendable Issued</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-par') }}">
+        <i class="mdi mdi-receipt menu-icon"></i>
+        <span class="menu-title">Property <br>Acknowledgment Receipt</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin-history') }}">
+        <i class="mdi mdi-receipt-text menu-icon"></i>
+        <span class="menu-title">History</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Your content goes here -->
+<div class="main-content">
 
     <!-- Navbar -->
-    <div class="container-fluid page-body-wrapper">
-
       <!-- partial:./partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -315,11 +342,11 @@
                 </a>
               </div>
             </li> -->
-          </ul>
+          <!-- </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
             <span class="mdi mdi-menu"></span>
           </button>
-        </div>
+        </div> -->
         <!-- <div class="navbar-menu-wrapper navbar-search-wrapper d-none d-lg-flex align-items-center">
           <ul class="navbar-nav mr-lg-2">
             <li class="nav-item nav-search d-none d-lg-block">
@@ -369,7 +396,6 @@
       
       <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
 
   <!-- container-scroller -->

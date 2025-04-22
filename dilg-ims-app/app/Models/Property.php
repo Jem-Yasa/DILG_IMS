@@ -9,13 +9,14 @@ class Property extends Model
 {
     use HasFactory;
 
-    protected $table = 'properties'; // Ensure this matches your database table name
+    protected $table = 'properties'; 
 
     protected $fillable = [
         'office',
         'ics_rrsp_no',
-        'accountable_type', // Corrected field name
-        'article', // Corrected field name
+        'accountable_type', 
+        'value',
+        'article', 
         'description',
         'unit_measure',
         'unit_value',
