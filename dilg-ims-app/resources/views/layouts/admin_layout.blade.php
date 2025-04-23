@@ -217,39 +217,73 @@
 <!-- Your content goes here -->
 <div class="main-content">
 
-    <!-- Navbar -->
-      <!-- partial:./partials/_navbar.html -->
-      <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+<nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
-          </button>
-          <!-- <div class="navbar-brand-wrapper">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo"/></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
-          </div> -->
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1"> Welcome back, Brandon Haynes</h4>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item"> 
-              <h4 id="realTimeDate" class="mb-0 font-weight-bold d-none d-xl-block"></h4>
-            </li> 
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                  <img src="{{ asset('template/images/faces/face5.jpg') }}" alt="profile" class="profile-img"/>
-                  <span class="nav-profile-name">Administrator</span>
-              </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                    <i class="mdi mdi-settings text-primary"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item">
-                    <i class="mdi mdi-logout text-primary"></i>
-                    Logout
-                </a>
+        </button>
+        <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1"> Welcome back, Administrator</h4>
+        <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item">
+                <h4 id="realTimeDate" class="mb-0 font-weight-bold d-none d-xl-block"></h4>
+            </li>
+            <!-- <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Administrator
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#"> Profile</a></li>
+                    <li><a class="dropdown-item" href="#"> Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
             </div>
-          </li>
-      </nav>
+
+<script src="{{ asset('path/to/bootstrap.bundle.min.js') }}"></script> -->
+
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" href="#" **data-bs-toggle="dropdown"** id="profileDropdown" aria-expanded="false">
+                    <img src="{{ asset('template/images/faces/face5.jpg') }}" alt="profile" class="profile-img"/>
+                    <span class="nav-profile-name">Administrator</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item">
+                        <i class="mdi mdi-account text-primary"></i>
+                        Profile
+                    </a>
+                    <a class="dropdown-item">
+                        <i class="mdi mdi-settings text-primary"></i>
+                        Settings
+                    </a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                        <i class="mdi mdi-logout text-primary"></i>
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            </li>
+
+            <script src="{{ asset('template/vendors/js/vendor.bundle.base.js') }}"></script>
+            <script src="{{ asset('template/vendors/bootstrap/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('template/js/off-canvas.js') }}"></script>
+            <script src="{{ asset('template/js/hoverable-collapse.js') }}"></script>
+            <script src="{{ asset('template/js/template.js') }}"></script>
+            <script src="{{ asset('template/js/settings.js') }}"></script>
+            <script src="{{ asset('template/js/todolist.js') }}"></script>
+                    </ul>
+                </div>
+            </nav>
+
+            <script src="{{ asset('template/vendors/js/vendor.bundle.base.js') }}"></script>
+            <script src="{{ asset('template/js/off-canvas.js') }}"></script>
+            <script src="{{ asset('template/js/hoverable-collapse.js') }}"></script>
+            <script src="{{ asset('template/js/template.js') }}"></script>
+            <script src="{{ asset('template/js/settings.js') }}"></script>
+            <script src="{{ asset('template/js/todolist.js') }}"></script>
 
       <!-- Content -->
       @yield('contents')

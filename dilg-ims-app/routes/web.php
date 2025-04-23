@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertyController;
 
+// Route::view('/', 'auth.register');
+// Route::view('/', 'auth.login');
 Route::view('/', 'admin.admin-dashboard');
 
 // Protected Routes (Requires Authentication)
