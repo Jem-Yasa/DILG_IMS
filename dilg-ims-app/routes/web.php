@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\ProfileController;
 
 // Route::view('/', 'auth.register');
 Route::view('/', 'auth.login');
@@ -11,7 +12,9 @@ Route::view('/', 'auth.login');
 Route::middleware(['auth'])->group(function () {
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
     Route::view('profile', 'profile.profile')->name('profile');
-    Route::view('edit', 'editProfile')->name('profile.edit');
+    Route::view('edit', 'profile.edit')->name('profile.edit');
+    Route::view('update', 'profile.update')->name('profile.update');
+    Route::view('destroy', 'profile.destroy')->name('profile.destroy');
 });
 
 // Admin Routes

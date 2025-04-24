@@ -54,7 +54,7 @@
 
     .main-content {
       margin-left: 250px;
-      margin-top: 60px;
+      margin-top: 100px;
       padding: 20px;
       width: calc(100% - 250px);
       box-sizing: border-box;
@@ -212,8 +212,8 @@
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-account mr-2 text-primary"></i>Profile</a>
-              <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-account mr-2 text-primary"></i>Account</a>
-              <a class="dropdown-item"><i class="mdi mdi-settings mr-2 text-primary"></i>Settings</a>
+              <a class="dropdown-item"><i class="mdi mdi-account-circle mr-2 text-primary"></i>Account</a>
+              <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="mdi mdi-settings mr-2 text-primary"></i>Settings</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
