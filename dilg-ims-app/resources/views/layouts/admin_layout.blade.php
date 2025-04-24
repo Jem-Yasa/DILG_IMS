@@ -211,7 +211,8 @@
               Administrator
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item"><i class="mdi mdi-account mr-2 text-primary"></i>Profile</a>
+              <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-account mr-2 text-primary"></i>Profile</a>
+              <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-account mr-2 text-primary"></i>Account</a>
               <a class="dropdown-item"><i class="mdi mdi-settings mr-2 text-primary"></i>Settings</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}"

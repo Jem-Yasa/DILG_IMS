@@ -42,6 +42,7 @@
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
+                
 
                 <x-primary-button class="ms-3" style="background-color: #5DA2E3; border-color: #5DA2E3; color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                     {{ __('Log in') }}
