@@ -35,8 +35,10 @@ Route::prefix('admin')->group(function () {
         // CRUD Routes
         Route::get('/properties', 'index')->name('properties.index');
         Route::post('/property/store', 'store')->name('property.store');
-        Route::get('/property/edit/{id}', 'edit')->name('property.edit'); 
-        Route::put('/property/update/{id}', 'update')->name('property.update'); 
+        // Route::get('/property/edit/{id}', 'edit')->name('property.edit'); 
+        Route::get('/property/{id}/edit', [PropertyController::class, 'edit'])->name('property.edit');
+        Route::put('/property/{id}', [PropertyController::class, 'update'])->name('property.update');
+        // Route::put('/property/update/{id}', 'update')->name('property.update'); 
         Route::delete('/property/destroy/{id}', 'destroy')->name('property.destroy'); 
         Route::get('/property/history', 'history')->name('property.history');
         

@@ -45,7 +45,10 @@
       background-color: #fff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
+      height: 100px; /* Fix height of the navbar */
     }
+
+
 
     .sidebar-collapsed .navbar {
       left: 70px;
@@ -54,11 +57,11 @@
 
     .main-content {
       margin-left: 250px;
-      margin-top: 100px;
+      margin-top: 100px; /* Adjust top margin to fit fixed header */
       padding: 20px;
       width: calc(100% - 250px);
       box-sizing: border-box;
-      min-height: calc(100vh - 60px);
+      min-height: calc(250vh - 60px);
       transition: all 0.3s ease;
     }
 
@@ -71,7 +74,7 @@
       margin-top: 20px;
       font-weight: bold;
       font-size: 30px;
-      color: white !important; 
+      color: white !important;
       margin: 0;
       text-align: center;
       width: 100%;
@@ -87,8 +90,8 @@
       max-width: 125px;
       height: auto;
       transition: all 0.3s ease;
-      margin-top: 20px; 
-      margin-bottom: 20px; 
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     .sidebar-collapsed .sidebar-logo {
@@ -176,13 +179,13 @@
 
       <li class="nav-item"><a class="nav-link" href="{{ route('admin-dashboard') }}"><i class="mdi mdi-view-quilt menu-icon"></i> <span class="menu-title">Dashboard</span></a></li>
       <li class="nav-item"><a class="nav-link" href="{{ route('admin-issued_table') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Property Issued Table</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('admin-registry') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Registry of Semi-Expendable Property Issued</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('admin-semi_card') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Semi-Expendable Property Card</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('admin-property_ledger_card') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Property Ledger Card</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('admin-registry') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Registry of Semi-<br>Expendable Property<br> Issued</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('admin-semi_card') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Semi-Expendable <br> Property Card</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('admin-property_ledger_card') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Semi-Expendable <br>Property Ledger Card</span></a></li>
       <li class="nav-item"><a class="nav-link" href="{{ route('admin-ics') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Inventory Custodian Slip</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('admin-expendable_issued') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Report of Semi-Expendable Issued</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('admin-par') }}"><i class="mdi mdi-receipt menu-icon"></i><span class="menu-title">Property Acknowledgment Receipt</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('admin-history') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">History</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('admin-expendable_issued') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">Report of Semi-<br>Expendable Issued</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('admin-par') }}"><i class="mdi mdi-receipt menu-icon"></i><span class="menu-title">Property <br> Acknowledgment Receipt</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('admin-history') }}"><i class="mdi mdi-receipt-text menu-icon"></i><span class="menu-title">History</span></a></li> 
     </ul>
   </nav>
 
@@ -212,7 +215,7 @@
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-account mr-2 text-primary"></i>Profile</a>
-              <a class="dropdown-item"><i class="mdi mdi-account-circle mr-2 text-primary"></i>Account</a>
+              <a class="dropdown-item"><i class="mdi mdi-account-circle mr-2 text-primary"></i>Accounts</a>
               <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="mdi mdi-settings mr-2 text-primary"></i>Settings</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}"

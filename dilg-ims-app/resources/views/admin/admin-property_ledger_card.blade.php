@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('title', 'Semi-Expandable Property Ledger Card')
+@section('title', 'Semi-Expendable Property Ledger Card')
 
 @section('contents')
 <section class="section">
@@ -10,7 +10,7 @@
 
                 <!-- Title -->
                 <div class="mb-4">
-                    <h3 class="mb-0">Semi-Expandable Property Ledger Card</h3>
+                    <h3 class="mb-0">Semi-Expendable Property Ledger Card</h3>
                 </div>
 
                 <!-- Controls Container -->
@@ -49,28 +49,20 @@
                         </button>
 
                         <!-- Filter Dropdown -->
-                        <div id="filterDropdown" style="display: none; position: absolute; top: 45px; right: 0; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
+                        <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
                             <select id="inventoryTypeDropdown" class="form-select" style="width: 100%; padding: 5px;" onchange="filterTable()">
-                                <option value="" selected>All Inventory Types</option>
-                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option>
-                                <option value="ICT Equipment HV">ICT Equipment</option>
-                                <option value="Office Equipment HV">Office Equipment</option>
-                                <option value="Furniture & Fixture HV">Furniture & Fixture</option>
-                                <option value="Communication HV">Communication</option>
-                                <option value="Books HV">Books HV</option>
-                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option>
-                                <option value="ICT Equipment LV">ICT Equipment</option>
-                                <option value="Office Equipment LV">Office Equipment</option>
-                                <option value="Furniture & Fixture LV">Furniture & Fixture</option>
-                                <option value="Communication LV">Communication</option>
-                                <option value="Books LV">Books LV</option>
+                                <option value="" disabled selected>Inventory Type</option>
+                                <option value="ICT Equipment">ICT Equipment</option>
+                                <option value="Office Equipment">Office Equipment</option>
+                                <option value="Furniture & Fixture">Furniture & Fixture</option>
+                                <option value="Communication">Communication</option>
+                                <option value="Books">Books</option>
                             </select>
-
-                            <!-- Cancel Filter Button -->
                             <button onclick="cancelFilter()" style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
                                 Cancel Filter
                             </button>
                         </div>
+
                     </div>
                 </div>
 
@@ -184,10 +176,10 @@
 
         rows.forEach(row => {
             const textContent = row.innerText.toLowerCase();
-            const type = (row.getAttribute("data-type") || "").toLowerCase();
+            const inventoryType = (row.querySelector("td:nth-child(7)").innerText || "").toLowerCase();  // Assuming the inventory type is in the 7th column
 
             const matchesSearch = textContent.includes(searchInput);
-            const matchesFilter = !filterValue || type === filterValue;
+            const matchesFilter = !filterValue || inventoryType.includes(filterValue);
 
             if (matchesSearch && matchesFilter) {
                 row.style.display = "";
@@ -224,4 +216,5 @@
 
     window.onload = filterTable;
 </script>
+
 @endsection

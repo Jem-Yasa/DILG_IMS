@@ -111,7 +111,6 @@
     max-width: 1000px; /* Optional: limit total width */
 }
 
-
 /* Cards in 1 line */
 .card-container {
     margin-left: 100px;

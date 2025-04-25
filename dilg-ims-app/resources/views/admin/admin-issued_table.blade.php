@@ -65,21 +65,13 @@
                                     <!-- Inventory Type Filter -->
                                         <div id="filterDropdown" style="display: none; position: absolute; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
                                             <select id="inventoryTypeDropdown" class="form-select" style="width: 100%; padding: 5px;">
-                                                <option value="" disabled selected>Select Article Inventory Type</option> <!-- Non-Selectable Label -->
-                                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option> <!-- Non-Selectable Label -->
-                                                <option value="ICT Equipment HV">ICT Equipment</option>
-                                                <option value="Office Equipment HV">Office Equipment</option>
-                                                <option value="Furniture & Fixture HV">Furniture & Fixture</option>
-                                                <option value="Communication HV">Communication</option>
-                                                <option value="Books HV">Books HV</option>
-                                                <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option> <!-- Non-Selectable Label -->
-                                                <option value="ICT Equipment LV">ICT Equipment</option>
-                                                <option value="Office Equipment LV">Office Equipment</option>
-                                                <option value="Furniture & Fixture LV">Furniture & Fixture</option>
-                                                <option value="Communication LV">Communication</option>
-                                                <option value="Books LV">Books LV</option>
+                                            <<option value="" disabled selected>Inventory Type</option>
+                                                <option value="ICT Equipment">ICT Equipment</option>
+                                                <option value="Office Equipment">Office Equipment</option>
+                                                <option value="Furniture & Fixture">Furniture & Fixture</option>
+                                                <option value="Communication">Communication</option>
+                                                <option value="Books">Books</option>
                                             </select>
-
                                             <button onclick="cancelFilter()" style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
                                                 Cancel Filter
                                             </button>
@@ -152,8 +144,9 @@
                                             <td></td> <!-- Balance Qty -->
                                             <td>{{ $property->remarks }}</td>
                                             <td>
-                                                <a href="{{ route('property.edit', $property->id) }}" class="btn btn-primary btn-sm" 
-                                                    style="width: 80px; height: 35px; text-align: center; margin-bottom: 5px;">Edit</a>
+                                            <a href="{{ route('property.edit', $property->id) }}" class="btn btn-primary btn-sm" 
+                                                 style="width: 80px; height: 35px; text-align: center; margin-bottom: 5px;">Edit</a>
+
                                                 <form action="{{ route('property.destroy', $property->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -297,108 +290,76 @@
 
     <!-- filter -->
     <script>
-        function toggleFilterDropdown() {
-            var dropdown = document.getElementById("filterDropdown");
-            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-        }
-        
-        function filterTable() {
-            let selectedValue = document.getElementById("inventoryTypeDropdown").value.toLowerCase();
-            let tableBody = document.getElementById("propertyTableBody");
-            let tableRows = tableBody.querySelectorAll("tr");
-            let found = false; // To track if any row is visible
+    function toggleFilterDropdown() {
+        var dropdown = document.getElementById("filterDropdown");
+        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+    }
 
-            tableRows.forEach(row => {
-                let inventoryTypeCell = row.cells[3]; // Adjusted to the correct column index (4th column, zero-based index is 3)
-                
-                if (inventoryTypeCell) {
-                    let inventoryText = inventoryTypeCell.textContent.trim().toLowerCase();
-                    
-                    if (selectedValue === "" || inventoryText.includes(selectedValue)) {
-                        row.style.display = ""; // Show row
-                        found = true;
-                    } else {
-                        row.style.display = "none"; // Hide row
-                    }
+    function filterTable() {
+        let selectedValue = document.getElementById("inventoryTypeDropdown").value.toLowerCase();
+        let tableBody = document.getElementById("propertyTableBody");
+        let tableRows = tableBody.querySelectorAll("tr");
+        let found = false; // To track if any matching rows are found
+
+        tableRows.forEach(row => {
+            // Assuming the "Accountable type" is the 4th column (index 3).
+            // Adjust the index if you want to filter by a different column.
+            let filterColumnIndex = 3;
+            let cellToFilter = row.cells[filterColumnIndex];
+
+            if (cellToFilter) {
+                let cellText = cellToFilter.textContent.trim().toLowerCase();
+
+                // Show the row if no filter is selected OR if the cell text includes the selected value
+                if (selectedValue === "" || cellText.includes(selectedValue)) {
+                    row.style.display = "";
+                    found = true;
+                } else {
+                    row.style.display = "none";
                 }
-            });
-
-            // Remove existing "No Property Found" row if present
-            let noDataRow = document.getElementById("noDataRow");
-            if (noDataRow) {
-                noDataRow.remove();
+            } else {
+                // Handle cases where the row might not have the expected number of cells
+                row.style.display = "none";
             }
-
-            // If no matching rows are found, insert a "No Property Found" row
-            if (!found) {
-                let noDataMessage = document.createElement("tr");
-                noDataMessage.id = "noDataRow";
-                noDataMessage.innerHTML = `<td colspan="20" style="text-align: center; font-weight: bold;">No Property Found</td>`;
-                tableBody.appendChild(noDataMessage);
-            }
-        }
-
-        function cancelFilter() {
-            let tableBody = document.getElementById("propertyTableBody");
-            let tableRows = tableBody.querySelectorAll("tr");
-
-            // Show all rows again
-            tableRows.forEach(row => {
-                row.style.display = "";
-            });
-
-            // Remove "No Property Found" message if present
-            let noDataRow = document.getElementById("noDataRow");
-            if (noDataRow) {
-                noDataRow.remove();
-            }
-
-            // Reset dropdown selection
-            document.getElementById("inventoryTypeDropdown").value = "";
-        }
-
-        // Attach event listener to the correct dropdown
-        document.getElementById("inventoryTypeDropdown").addEventListener("change", filterTable);
-    </script>
-
-    <!-- Search function -->
-     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("search").addEventListener("input", function () {
-                let searchValue = this.value.toLowerCase();
-                let tableRows = document.querySelectorAll("#propertyTableBody tr");
-                let found = false; // Track if any row is visible
-
-                tableRows.forEach(row => {
-                    let cells = row.querySelectorAll("td");
-                    let rowContainsSearchText = Array.from(cells).some(cell => 
-                        cell.textContent.toLowerCase().includes(searchValue)
-                    );
-
-                    if (rowContainsSearchText) {
-                        row.style.display = ""; // Show row
-                        found = true;
-                    } else {
-                        row.style.display = "none"; // Hide row
-                    }
-                });
-
-                // Remove existing "No Property Found" row if present
-                let noDataRow = document.getElementById("noDataRow");
-                if (noDataRow) {
-                    noDataRow.remove();
-                }
-
-                // If no matching rows are found, insert a "No Property Found" row
-                if (!found) {
-                    let noDataMessage = document.createElement("tr");
-                    noDataMessage.id = "noDataRow";
-                    noDataMessage.innerHTML = `<td colspan="20" style="text-align: center; font-weight: bold;">No Property Found</td>`;
-                    document.getElementById("propertyTableBody").appendChild(noDataMessage);
-                }
-            });
         });
-     </script>
+
+        // Handle the "No Property Found" message
+        let noDataRow = document.getElementById("noDataRow");
+        if (noDataRow) {
+            noDataRow.remove();
+        }
+
+        if (!found) {
+            let newNoDataRow = document.createElement("tr");
+            newNoDataRow.id = "noDataRow";
+            newNoDataRow.innerHTML = `<td colspan="20" style="text-align: center; font-weight: bold;">No Property Found</td>`;
+            tableBody.appendChild(newNoDataRow);
+        }
+    }
+
+    function cancelFilter() {
+        let tableBody = document.getElementById("propertyTableBody");
+        let tableRows = tableBody.querySelectorAll("tr");
+
+        tableRows.forEach(row => {
+            row.style.display = ""; // Show all rows
+        });
+
+        // Remove "No Property Found" message if present
+        let noDataRow = document.getElementById("noDataRow");
+        if (noDataRow) {
+            noDataRow.remove();
+        }
+
+        // Reset dropdown selection
+        document.getElementById("inventoryTypeDropdown").value = "";
+    }
+
+    // Attach event listener to the inventory type dropdown
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("inventoryTypeDropdown").addEventListener("change", filterTable);
+    });
+    </script>
 
 
 <!-- Script Modal -->

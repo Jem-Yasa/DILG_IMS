@@ -144,20 +144,21 @@ class PropertyController extends Controller
         return view('properties.show', compact('property'));
     }
 
-    /**
-     * Edit property entry.
-     */
+    
     public function edit($id)
     {
-        $property = Property::findOrFail($id);
-        return view('property.edit', compact('property'));
+        $property = Property::findOrFail($id); // Find property by ID
+        return view('property.edit', compact('property')); // Pass the property data to the edit view
     }
+    
 
     /**
      * Update property entry.
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, $id)
     {
+        $property = Property::findOrFail($id);
+
         $validatedData = $request->validate([
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
@@ -179,7 +180,7 @@ class PropertyController extends Controller
 
         $property->update($validatedData);
 
-        return redirect()->route('properties.index')->with('success', 'Property entry updated successfully!');
+        return redirect()->route('properties.index')->with('success', 'Property updated successfully!');
     }
 
     public function storeHistory(Request $request)

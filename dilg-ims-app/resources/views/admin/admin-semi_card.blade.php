@@ -44,28 +44,20 @@
                             </button>
 
                             <!-- Filter Dropdown -->
-                            <div id="filterDropdown" style="display: none; position: absolute; top: 45px; right: 0; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
-                                <select id="inventoryTypeDropdown" class="form-select" style="width: 100%; padding: 5px;" onchange="filterTable()">
-                                    <option value="" selected>All Inventory Types</option>
-                                    <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES HIGH VALUE ──</option>
-                                    <option value="ICT Equipment HV">ICT Equipment</option>
-                                    <option value="Office Equipment HV">Office Equipment</option>
-                                    <option value="Furniture & Fixture HV">Furniture & Fixture</option>
-                                    <option value="Communication HV">Communication</option>
-                                    <option value="Books HV">Books HV</option>
-                                    <option value="" disabled>── SEMI-EXPENDABLE PROPERTIES LOW VALUE ──</option>
-                                    <option value="ICT Equipment LV">ICT Equipment</option>
-                                    <option value="Office Equipment LV">Office Equipment</option>
-                                    <option value="Furniture & Fixture LV">Furniture & Fixture</option>
-                                    <option value="Communication LV">Communication</option>
-                                    <option value="Books LV">Books LV</option>
-                                </select>
+                                <div id="filterDropdown" style="display: none; position: absolute; top: 45px; right: 0; background: white; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); width: 250px;">
+                                    <select id="inventoryTypeDropdown" class="form-select" style="width: 100%; padding: 5px;" onchange="filterTable()">
+                                        <option value="" disabled selected>Inventory Type</option>
+                                        <option value="ICT Equipment">ICT Equipment</option>
+                                        <option value="Office Equipment">Office Equipment</option>
+                                        <option value="Furniture & Fixture">Furniture & Fixture</option>
+                                        <option value="Communication">Communication</option>
+                                        <option value="Books">Books</option>
+                                    </select>
+                                    <button onclick="cancelFilter()" style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
+                                        Cancel Filter
+                                    </button>
+                                </div>
 
-                                <!-- Cancel Filter Button -->
-                                <button onclick="cancelFilter()" style="background-color: #ff3b3b; color: white; border: none; padding: 10px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; height: 40px; text-align: center; margin-top: 3px;">
-                                    Cancel Filter
-                                </button>
-                            </div>
                         </div>
                     </div>
 
@@ -172,7 +164,7 @@
     // Filter function that filters the table based on search and filter value
     function filterTable() {
         let searchInput = document.getElementById("search").value.toLowerCase();
-        let filterValue = document.getElementById("inventoryTypeDropdown").value;
+        let filterValue = document.getElementById("inventoryTypeDropdown").value.toLowerCase(); // Adjusted to lowercase comparison
         let rows = document.querySelectorAll("#table-body tr");
         let anyVisible = false;
 
@@ -180,8 +172,9 @@
             let text = row.innerText.toLowerCase();
             let type = row.getAttribute("data-type").toLowerCase(); // Ensure the type is compared case-insensitively
 
+            // Matching the search input and filter value
             let matchesSearch = text.includes(searchInput);
-            let matchesFilter = (filterValue === "" || type === filterValue.toLowerCase()); // Case-insensitive comparison
+            let matchesFilter = (filterValue === "" || type.includes(filterValue)); // Case-insensitive comparison
 
             if (matchesSearch && matchesFilter) {
                 row.style.display = "";
@@ -191,6 +184,7 @@
             }
         });
 
+        // Display 'No results' message if no rows match the filters
         if (!anyVisible) {
             document.getElementById("noResultsMessage").style.display = "block";
         } else {
@@ -204,19 +198,20 @@
     }
 
     function cancelFilter() {
-        document.getElementById("inventoryTypeDropdown").value = "";
-        document.getElementById("search").value = "";
-        filterTable();
-        document.getElementById("filterDropdown").style.display = "none";
+        document.getElementById("inventoryTypeDropdown").value = ""; // Clear filter dropdown
+        document.getElementById("search").value = ""; // Clear search input
+        filterTable(); // Apply the cleared filters
+        document.getElementById("filterDropdown").style.display = "none"; // Hide filter dropdown
     }
 
     function submitFilterForm() {
         let perPageValue = document.getElementById("recordsPerPage").value;
-        window.location.href = `?per_page=${perPageValue}`;
+        window.location.href = `?per_page=${perPageValue}`; // Adjust URL with per_page query param
     }
 
     window.onload = function() {
         filterTable(); // Call filterTable on page load to apply initial filters
     }
-    </script>
+</script>
+
 @endsection

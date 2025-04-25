@@ -3,17 +3,18 @@ use App\Models\Property;
 
 public function index()
 {
-    $statuses = ['issued', 'returned', 'reissued', 'cancelled'];
+    $statuses = ['Issued', 'Returned', 'Re-Issued'];
 
     $statusQuantities = [];
 
     foreach ($statuses as $status) {
-        $statusQuantities[$status] = Property::whereRaw('LOWER(status) = ?', [$status])->sum('quantity');
-    }   
+        $statusQuantities[$status] = Property::where('status', $status)
+                                              ->sum('quantity');
+    }
 
     // Semi-Expandable Cost Summary (HIGH/LOW VALUE)
-    $highValueProperties = Property::where('accountable_type', 'like', '%HV')->get();
-    $lowValueProperties  = Property::where('accountable_type', 'like', '%LV')->get();
+    $highValueProperties = Property::where('accountable_type', 'like', 'HV')->get();
+    $lowValueProperties  = Property::where('accountable_type', 'like', 'LV')->get();
 
     $inventorySummary = [
         'high' => $highValueProperties->groupBy('article')->map(fn($group) => $group->sum('total_cost')),
