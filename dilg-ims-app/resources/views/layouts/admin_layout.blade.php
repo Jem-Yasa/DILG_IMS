@@ -41,14 +41,12 @@
       top: 0;
       left: 250px;
       width: calc(100% - 250px);
-      z-index: 1001;
+      z-index: 1050;
       background-color: #fff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
-      height: 100px; /* Fix height of the navbar */
+      height: 100px;
     }
-
-
 
     .sidebar-collapsed .navbar {
       left: 70px;
@@ -57,7 +55,7 @@
 
     .main-content {
       margin-left: 250px;
-      margin-top: 100px; /* Adjust top margin to fit fixed header */
+      margin-top: 100px;
       padding: 20px;
       width: calc(100% - 250px);
       box-sizing: border-box;
@@ -106,7 +104,6 @@
       width: 80%;
     }
 
-    /* Flexbox for Navbar */
     .navbar-menu-wrapper {
       display: flex;
       justify-content: space-between;
@@ -132,7 +129,7 @@
       position: absolute;
       top: 100%;
       left: 0;
-      z-index: 1000;
+      z-index: 1051;
       margin-top: 5px;
     }
 
@@ -156,6 +153,18 @@
 
     #realTimeDate {
       font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
+
+      .navbar {
+        left: 0 !important;
+        width: 100% !important;
+      }
     }
   </style>
 </head>
@@ -215,7 +224,7 @@
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-account mr-2 text-primary"></i>Profile</a>
-              <a class="dropdown-item"><i class="mdi mdi-account-circle mr-2 text-primary"></i>Accounts</a>
+              <!-- <a class="dropdown-item"><i class="mdi mdi-account-circle mr-2 text-primary"></i>Accounts</a> -->
               <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="mdi mdi-settings mr-2 text-primary"></i>Settings</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}"
@@ -247,15 +256,13 @@
 <script>
   document.getElementById('menuToggleBtn').addEventListener('click', function () {
     document.body.classList.toggle('sidebar-collapsed');
-    
-    // Toggle visibility of the region label
+
     const label = document.querySelector(".region-label");
     if (label) {
       label.classList.toggle("hidden");
     }
   });
 
-  // Real-time date
   function updateDate() {
     const today = new Date();
     const options = { year: 'numeric', month: 'short', day: '2-digit' };

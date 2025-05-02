@@ -1,16 +1,20 @@
-<?php  
+<?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PropertyController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PropertyController; // Make sure to import PropertyController
 
-// Route::view('/', 'auth.register');
+Route::get('/test-issued-quantity', function () {
+    $issuedQuantityCount = \App\Models\Property::where('status', 'Issued')->sum('quantity');
+    return response()->json(['issued_quantity' => $issuedQuantityCount]);
+});
+
+// Default Route
 Route::view('/', 'auth.login');
-// Route::view('/', 'admin.admin-dashboard');
 
 // Protected Routes (Requires Authentication)
 Route::middleware(['auth'])->group(function () {
-    Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboard'])->middleware('verified')->name('dashboard');
     Route::view('profile', 'profile.profile')->name('profile');
     Route::view('edit', 'profile.edit')->name('profile.edit');
     Route::view('update', 'profile.update')->name('profile.update');
@@ -19,7 +23,9 @@ Route::middleware(['auth'])->group(function () {
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
-    Route::view('admin-dashboard', 'admin.admin-dashboard')->name('admin-dashboard');
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/status-quantities', [DashboardController::class, 'statusQuantities'])->name('status-quantities');
 
     // Property Management
     Route::controller(PropertyController::class)->group(function () {
@@ -31,17 +37,14 @@ Route::prefix('admin')->group(function () {
         Route::get('admin-ics', 'inventoryCustodianSlip')->name('admin-ics');
         Route::get('admin-property_ledger_card', 'semiExpendablePropertyLedgerCardTable')->name('admin-property_ledger_card');
         Route::get('admin-expendable_issued', 'semiExpendableIssued')->name('admin-expendable_issued');
-        
+
         // CRUD Routes
         Route::get('/properties', 'index')->name('properties.index');
         Route::post('/property/store', 'store')->name('property.store');
-        // Route::get('/property/edit/{id}', 'edit')->name('property.edit'); 
-        Route::get('/property/{id}/edit', [PropertyController::class, 'edit'])->name('property.edit');
-        Route::put('/property/{id}', [PropertyController::class, 'update'])->name('property.update');
-        // Route::put('/property/update/{id}', 'update')->name('property.update'); 
-        Route::delete('/property/destroy/{id}', 'destroy')->name('property.destroy'); 
+        Route::get('/property/{id}/edit', 'edit')->name('property.edit');
+        Route::put('/property/{id}', 'update')->name('property.update');
+        Route::delete('/property/destroy/{id}', 'destroy')->name('property.destroy');
         Route::get('/property/history', 'history')->name('property.history');
-        
     });
 
     // Additional Views
@@ -49,4 +52,5 @@ Route::prefix('admin')->group(function () {
     Route::view('admin-create', 'admin.admin-create')->name('admin-create');
 });
 
+// Auth Routes
 require __DIR__.'/auth.php';

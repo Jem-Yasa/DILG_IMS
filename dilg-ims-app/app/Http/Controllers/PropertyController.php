@@ -13,6 +13,12 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
+        // Remove commas from unit_value and total_cost before validation
+        $request->merge([
+            'unit_value' => str_replace(',', '', $request->input('unit_value')),
+            'total_cost' => str_replace(',', '', $request->input('total_cost')),
+        ]);
+
         $validatedData = $request->validate([
             'office' => 'required|string|max:255',
             'ics_rrsp_no' => 'nullable|string|max:100',
@@ -31,9 +37,6 @@ class PropertyController extends Controller
             'status' => 'nullable|string|in:Issued,Returned,Re-Issued,Canceled',
             'remarks' => 'nullable|string',
         ]);
-
-        $validatedData['unit_value'] = str_replace(',', '', $request->input('unit_value'));
-        $validatedData['total_cost'] = str_replace(',', '', $request->input('total_cost'));
 
         Property::create($validatedData);
 
@@ -158,6 +161,12 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $property = Property::findOrFail($id);
+
+        // Remove commas from unit_value and total_cost before validation
+        $request->merge([
+            'unit_value' => str_replace(',', '', $request->input('unit_value')),
+            'total_cost' => str_replace(',', '', $request->input('total_cost')),
+        ]);
 
         $validatedData = $request->validate([
             'office' => 'required|string|max:255',

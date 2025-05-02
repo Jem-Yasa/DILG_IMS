@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.admin_layout') {{-- Update to match your layout file --}}
 
 @section('title', 'Dashboard')
 
@@ -6,25 +6,118 @@
 <div class="main-content">
     <section class="section">
 
-        <!-- Quantity Summary Cards -->
-        <div class="card-container">
-            <div class="card issued">
-                <div class="number">{{ $statusQuantities['issued'] ?? 0 }}</div>
-                <div class="label">Qty<br>Issued</div>
-            </div>
-            <div class="card returned">
-                <div class="number">{{ $statusQuantities['returned'] ?? 0 }}</div>
-                <div class="label">Qty<br>Returned</div>
-            </div>
-            <div class="card reissued">
-                <div class="number">{{ $statusQuantities['reissued'] ?? 0 }}</div>
-                <div class="label">Qty<br>Re-Issued</div>
-            </div>
-            <div class="card cancelled">
-                <div class="number">{{ $statusQuantities['cancelled'] ?? 0 }}</div>
-                <div class="label">Qty<br>Cancelled</div>
-            </div>
+   <!-- Quantity & History Summary Cards (All in One Row) -->
+    <div class="card-container" style="margin-top: 40px;" id="status-summary-container">
+        <!-- Static Status Cards -->
+        <div class="card issued">
+            <div class="number" id="status-issued">{{ $issuedQuantityCount ?? 0 }}</div>
+            <div class="label">Issued</div>
         </div>
+        <div class="card returned">
+            <div class="number" id="status-returned">{{ $returnedQuantityCount ?? 0 }}</div>
+            <div class="label">Returned</div>
+        </div>
+        <div class="card reissued">
+            <div class="number" id="status-reissued">{{ $reissuedQuantityCount ?? 0 }}</div>
+            <div class="label">Re-Issued</div>
+        </div>
+        <!-- Dynamic Status Cards (e.g. Cancelled) -->
+        @foreach ($statusQuantities as $reason => $count)
+            @if(!in_array($reason, ['issued', 'returned', 'reissued', 'delete']))
+                <div class="card" style="background-color: #6c757d;" data-reason="{{ $reason }}">
+                    <div class="number">{{ $count }}</div>
+                    <div class="label">Qty<br>{{ ucfirst($reason) }}</div>
+                </div>
+            @endif
+        @endforeach
+        <!-- <div class="card delete">
+            <div class="number" id="status-delete">{{ $statusQuantities['delete'] ?? 0 }}</div>
+            <div class="label">{{ Str::plural('Delete', $statusQuantities['delete'] ?? 0) }}</div>
+        </div> -->
+        <!-- <div class="card deleted-properties" style="background-color: #FF4500;">
+            <div class="number" id="deleted-properties-count">{{ $deletedPropertiesCount ?? 0 }}</div>
+            <div class="label">Deleted Properties</div>
+        </div> -->
+        <!-- <div class="card deleted-quantity" style="background-color: #FF6347;">
+            <div class="number" id="deleted-quantity-sum">{{ $deletedQuantitySum ?? 0 }}</div>
+            <div class="label">Deleted Quantity</div>
+        </div> -->
+        <!-- <div class="card cancelled-history">
+            <div class="number" id="cancelled-history-count">{{ $cancelledHistoryCount ?? 0 }}</div>
+            <div class="label">Cancelled History</div>
+        </div> -->
+        <!-- <div class="card history-count" style="background-color: #007bff;">
+            <div class="number" id="history-count">{{ $historyQuantityCount ?? 0 }}</div>
+            <div class="label">Total History</div>
+        </div> -->
+    </div>
+
+    <div class="card-container" style="margin-top: 20px;" id="cancelled-history-container">
+        <div class="card cancelled-history" style="background-color: #FF3B30;">
+            <div class="number" id="cancelled-history-count">{{ $cancelledHistoryCount ?? 0 }}</div>
+            <div class="label">Cancelled History</div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    async function fetchStatusQuantities() {
+        try {
+            const response = await fetch('{{ route("status-quantities") }}');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+
+            // Update main status cards
+            document.getElementById('status-issued').textContent = data.issued ?? 0;
+            document.getElementById('status-returned').textContent = data.returned ?? 0;
+            document.getElementById('status-reissued').textContent = data.reissued ?? 0;
+            document.getElementById('status-delete').textContent = data.delete ?? 0;
+            document.getElementById('history-count').textContent = data.history ?? 0;
+
+            // Update history quantities cards
+            const container = document.getElementById('history-quantities-container');
+            if (container) {
+                // Clear existing cards
+                container.innerHTML = '';
+
+                // Rebuild cards with updated data
+                for (const [reason, count] of Object.entries(data)) {
+                    if (['issued', 'returned', 'reissued', 'delete', 'history'].includes(reason)) continue;
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.backgroundColor = '#6c757d';
+                    card.setAttribute('data-reason', reason);
+
+                    const numberDiv = document.createElement('div');
+                    numberDiv.className = 'number';
+                    numberDiv.textContent = count;
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'label';
+                    labelDiv.innerHTML = 'Qty<br>' + reason.charAt(0).toUpperCase() + reason.slice(1);
+
+                    card.appendChild(numberDiv);
+                    card.appendChild(labelDiv);
+
+                    container.appendChild(card);
+                }
+            }
+        } catch (error) {
+            console.error('Failed to fetch status quantities:', error);
+        }
+    }
+
+    // Initial fetch
+    fetchStatusQuantities();
+
+    // Poll every 10 seconds
+    setInterval(fetchStatusQuantities, 10000);
+});
+</script>
+
+
 
         <!-- Asset Summary Cards -->
         <div class="asset-dashboard">
@@ -270,4 +363,62 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    async function fetchStatusQuantities() {
+        try {
+            const response = await fetch('{{ route("status-quantities") }}');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+
+            // Update main status cards
+            document.getElementById('status-issued').textContent = data.issued ?? 0;
+            document.getElementById('status-returned').textContent = data.returned ?? 0;
+            document.getElementById('status-reissued').textContent = data.reissued ?? 0;
+            document.getElementById('status-delete').textContent = data.delete ?? 0;
+
+            // Update history quantities cards
+            const container = document.getElementById('history-quantities-container');
+            if (container) {
+                // Clear existing cards
+                container.innerHTML = '';
+
+                // Rebuild cards with updated data
+                for (const [reason, count] of Object.entries(data)) {
+                    if (['issued', 'returned', 'reissued', 'delete'].includes(reason)) continue;
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.backgroundColor = '#6c757d';
+                    card.setAttribute('data-reason', reason);
+
+                    const numberDiv = document.createElement('div');
+                    numberDiv.className = 'number';
+                    numberDiv.textContent = count;
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'label';
+                    labelDiv.innerHTML = 'Qty<br>' + reason.charAt(0).toUpperCase() + reason.slice(1);
+
+                    card.appendChild(numberDiv);
+                    card.appendChild(labelDiv);
+
+                    container.appendChild(card);
+                }
+            }
+        } catch (error) {
+            console.error('Failed to fetch status quantities:', error);
+        }
+    }
+
+    // Initial fetch
+    fetchStatusQuantities();
+
+    // Poll every 10 seconds
+    setInterval(fetchStatusQuantities, 10000);
+});
+</script>
+
 @endsection
